@@ -1,6 +1,6 @@
 # Engineering College Placement Portal
 
-A MERN/Spring Boot full-stack placement portal for students, companies, and college admins.
+A Spring Boot full-stack placement portal for students, companies, and college admins.
 
 ## Tech Stack
 - **Backend:** Spring Boot (Java 21), MongoDB (Spring Data MongoDB), JWT Auth, JavaMailSender
