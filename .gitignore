@@ -12,10 +12,16 @@ frontend/.env
 frontend/.env.local
 frontend/.env.*.local
 
-# ── Environment files ─────────────────────────────────────────
+# ── Environment files (never commit real secrets) ─────────────────────────────
 .env
 .env.local
 .env.production
+.env.staging
+backend/.env
+frontend/.env
+# Allow the safe example templates
+!.env.example
+!**/.env.example
 
 # ── Editor & OS ───────────────────────────────────────────────
 .vscode/
