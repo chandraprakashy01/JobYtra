@@ -1,0 +1,25 @@
+# ── Maven / Java ──────────────────────────────────────────────
+backend/target/
+*.class
+*.jar
+*.jar.original
+*.war
+
+# ── Node / Frontend ───────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# ── Environment files ─────────────────────────────────────────
+.env
+.env.local
+.env.production
+
+# ── Editor & OS ───────────────────────────────────────────────
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
