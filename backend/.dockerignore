@@ -1,0 +1,9 @@
+target/
+*.class
+*.jar
+*.jar.original
+.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+.git
+.gitignore
+*.md

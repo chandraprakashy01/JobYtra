@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+
+  # ─── MongoDB ────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7-jammy
+    container_name: srgi_mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: placement_db
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"        # expose for local Compass connection
+    networks:
+      - srgi_net
+
+  # ─── Spring Boot Backend ────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: srgi_backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/placement_db
+      JWT_SECRET: ${JWT_SECRET:-change_this_secret_in_production}
+      SPRING_MAIL_HOST: ${SPRING_MAIL_HOST:-smtp.gmail.com}
+      SPRING_MAIL_PORT: ${SPRING_MAIL_PORT:-587}
+      SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME:-}
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD:-}
+    ports:
+      - "8080:8080"
+    networks:
+      - srgi_net
+
+  # ─── React + Nginx Frontend ─────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: srgi_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - srgi_net
+
+# ─── Volumes & Networks ───────────────────────────────────────────────────────
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  srgi_net:
+    driver: bridge
