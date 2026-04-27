@@ -12,6 +12,11 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Jobs from './pages/Jobs';
 import JobDetail from './pages/JobDetail';
+import About from './pages/About';
+import Events from './pages/Events';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import Contact from './pages/Contact';
 
 // Student Pages
 import StudentDashboard from './pages/student/StudentDashboard';
@@ -56,6 +61,11 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/jobs/:id" element={<JobDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
 
         {/* Student Routes */}
