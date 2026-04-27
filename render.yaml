@@ -12,7 +12,7 @@ services:
         source: /*
         destination: /index.html
 
-  # ─── Backend (Spring Boot + Java 21) ─────────────────────────────────────
+  # ─── Backend (Spring Boot + Java 21) ──────────────────────────────────────
   - type: web
     name: srgi-job-fare-backend
     runtime: java
@@ -20,9 +20,26 @@ services:
     buildCommand: ./mvnw clean package -DskipTests
     startCommand: java -jar target/placement-portal-0.0.1-SNAPSHOT.jar
     envVars:
-      - key: SPRING_DATA_MONGODB_URI
-        sync: false          # Set this in Render dashboard → Environment
-      - key: JWT_SECRET
-        sync: false          # Set this in Render dashboard → Environment
+      # Java version - must be 21 for Lombok compatibility
       - key: JAVA_VERSION
         value: 21
+
+      # MongoDB Atlas URI — set real value in Render Dashboard → Environment
+      - key: MONGO_URI
+        sync: false
+
+      # JWT
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRATION_MS
+        value: 86400000
+
+      # Mail (Gmail SMTP)
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: 587
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
