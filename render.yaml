@@ -1,0 +1,28 @@
+services:
+  # ─── Frontend (React + Vite) ──────────────────────────────────────────────
+  - type: web
+    name: srgi-job-fare-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    pullRequestPreviewsEnabled: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  # ─── Backend (Spring Boot + Java 21) ─────────────────────────────────────
+  - type: web
+    name: srgi-job-fare-backend
+    runtime: java
+    rootDir: backend
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -jar target/placement-portal-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: SPRING_DATA_MONGODB_URI
+        sync: false          # Set this in Render dashboard → Environment
+      - key: JWT_SECRET
+        sync: false          # Set this in Render dashboard → Environment
+      - key: JAVA_VERSION
+        value: 21
