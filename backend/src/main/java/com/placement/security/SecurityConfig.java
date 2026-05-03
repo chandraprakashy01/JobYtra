@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        // Reduced from default 10 to 8 for faster hashing while still secure enough for this use case
+        return new BCryptPasswordEncoder(8);
     }
 }
