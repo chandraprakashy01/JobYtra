@@ -20,9 +20,13 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2 group">
-              <Briefcase className="h-8 w-8 text-accentBlue transition-transform duration-300 group-hover:scale-110" />
-              <span className="text-xl font-heading font-bold text-white tracking-wide">JobYtra Job Fare</span>
+            <Link to="/" className="flex items-center space-x-3 group" aria-label="JobYtra Home">
+              <div className="p-2 bg-gradient-to-tr from-accentBlue/20 to-cyan-500/10 rounded-xl border border-accentBlue/30 shadow-md shadow-accentBlue/5 transition-all duration-300 group-hover:border-accentBlue/60 group-hover:shadow-accentBlue/10 group-hover:scale-105">
+                <Briefcase className="h-6 w-6 text-accentBlue transition-transform duration-300 group-hover:rotate-3" />
+              </div>
+              <span className="text-xl font-heading font-extrabold text-white tracking-wide transition-colors duration-300 group-hover:text-accentBlue">
+                JobYtra
+              </span>
             </Link>
           </div>
 

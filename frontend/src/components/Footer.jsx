@@ -105,7 +105,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-gray-800 bg-gray-900/80 backdrop-blur-sm mt-16">
+    <footer className="border-t border-slate-200 bg-white/80 backdrop-blur-sm mt-16">
       {/* Top gradient accent line */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-accentBlue/50 to-transparent" />
 
@@ -119,20 +119,20 @@ const Footer = () => {
               <div className="p-2 rounded-lg bg-accentBlue/10 border border-accentBlue/20 group-hover:bg-accentBlue/20 transition-colors duration-300">
                 <Briefcase className="w-5 h-5 text-accentBlue" />
               </div>
-              <span className="text-lg font-heading font-bold text-white tracking-wide">
+              <span className="text-lg font-heading font-bold text-slate-900 tracking-wide logo">
                 JobYtra Job Fare
               </span>
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed mt-3 max-w-xs">
+            <p className="text-gray-600 text-sm leading-relaxed mt-3 max-w-xs">
               Connecting JobYtra students with top recruiters. Discover opportunities, launch careers, and build your future — all in one platform.
             </p>
 
             {/* Email badge */}
             <a
               href="mailto:placements@jobytra.edu.in"
-              className="inline-flex items-center gap-2 mt-5 text-xs text-gray-400 hover:text-accentBlue transition-colors duration-200 group"
+              className="inline-flex items-center gap-2 mt-5 text-xs text-gray-600 hover:text-accentBlue transition-colors duration-200 group"
             >
-              <Mail className="w-3.5 h-3.5 text-gray-600 group-hover:text-accentBlue transition-colors duration-200" />
+              <Mail className="w-3.5 h-3.5 text-gray-500 group-hover:text-accentBlue transition-colors duration-200" />
               placements@jobytra.edu.in
               <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
             </a>
@@ -147,7 +147,7 @@ const Footer = () => {
       </div>
 
       {/* Divider */}
-      <div className="border-t border-gray-800/80" />
+      <div className="border-t border-slate-200" />
 
       {/* Bottom bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
@@ -156,7 +156,7 @@ const Footer = () => {
           {/* Copyright */}
           <p className="text-gray-500 text-xs text-center sm:text-left">
             © {year}{' '}
-            <span className="text-gray-400 font-medium">JobYtra Job Fare</span>
+            <span className="text-gray-600 font-medium">JobYtra Job Fare</span>
             . All rights reserved.
           </p>
 
@@ -169,9 +169,9 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="group p-2 rounded-lg border border-gray-700/60 bg-gray-800/40 hover:border-accentBlue/50 hover:bg-accentBlue/10 transition-all duration-250"
+                className="group p-2 rounded-lg border border-slate-200 bg-slate-50 hover:border-accentBlue/50 hover:bg-accentBlue/10 transition-all duration-250"
               >
-                <Icon className="w-4 h-4 text-gray-400 group-hover:text-accentBlue transition-colors duration-200" />
+                <Icon className="w-4 h-4 text-gray-500 group-hover:text-accentBlue transition-colors duration-200" />
               </a>
             ))}
           </div>

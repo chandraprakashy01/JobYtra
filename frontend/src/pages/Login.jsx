@@ -50,12 +50,9 @@ const Login = () => {
           <div>
             <label className="label-text">Email Address</label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-gray-500" />
-              </div>
               <input 
                 type="email" 
-                className="input-field pl-11" 
+                className="input-field" 
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -70,12 +67,9 @@ const Login = () => {
               <Link to="#" className="text-sm text-accentBlue hover:text-hoverBlue transition-colors">Forgot password?</Link>
             </div>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-gray-500" />
-              </div>
               <input 
                 type="password" 
-                className="input-field pl-11" 
+                className="input-field" 
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

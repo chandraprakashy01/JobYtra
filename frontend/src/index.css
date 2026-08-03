@@ -4,80 +4,76 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   body {
-    @apply text-white font-body;
+    @apply text-slate-900 font-body bg-[#F1F5F9];
     position: relative;
     min-height: 100vh;
   }
-  
-  body::before {
-    content: '';
-    position: fixed;
-    top: -5vh;
-    left: -5vw;
-    width: 110vw;
-    height: 110vh;
-    z-index: -2;
-    background-image: url('/background-image.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    animation: backgroundRealistic 30s ease-in-out infinite alternate;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background: rgba(10, 17, 40, 0.5); /* Reduced opacity from 85% to 50% for better visibility */
-  }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+    @apply font-heading text-slate-900 font-bold;
   }
-}
 
-@keyframes backgroundRealistic {
-  0% {
-    transform: scale(1) translate(0, 0);
+  /* Force standard paragraphs, labels, and text details to dark grays */
+  p, label {
+    @apply text-slate-600;
   }
-  100% {
-    transform: scale(1.05) translate(-1%, -1%);
+  
+  /* Reset default links to slate/blue */
+  a {
+    @apply transition-colors duration-200;
   }
 }
 
 @layer components {
+  /* Buttons */
   .btn-primary {
-    @apply px-4 py-2 bg-accentBlue text-white rounded-xl font-medium transition-all duration-300 hover:bg-hoverBlue hover:-translate-y-0.5 hover:shadow-[0_4px_20px_-4px_rgba(37,99,235,0.4)] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply px-4 py-2 bg-accentBlue text-white rounded-xl font-medium transition-all duration-300 hover:bg-hoverBlue hover:-translate-y-0.5 hover:shadow-[0_4px_20px_-4px_rgba(37,99,235,0.4)] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed !important;
+    color: #FFFFFF !important;
   }
+  
   .btn-secondary {
-    @apply px-4 py-2 bg-lightNavy text-white rounded-xl font-medium transition-all duration-300 hover:bg-gray-800 border border-gray-700 hover:border-gray-500 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply px-4 py-2 bg-white text-slate-800 rounded-xl font-medium transition-all duration-300 hover:bg-slate-50 border border-slate-200 hover:border-slate-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed !important;
+    color: #1E293B !important;
   }
+
+  /* Card Component - clean white container with soft modern shadow */
   .card {
-    @apply bg-lightNavy rounded-xl border border-gray-800 p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-accentBlue/30 hover:-translate-y-1;
+    @apply bg-white rounded-xl border border-slate-200/80 p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05),0_1px_2px_rgba(0,0,0,0.02)] transition-all duration-300 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] hover:border-accentBlue/20 hover:-translate-y-1 !important;
   }
+
+  /* Input fields */
   .input-field {
-    @apply w-full px-4 py-3 bg-darkNavy border border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-accentBlue/50 focus:border-accentBlue text-white placeholder-gray-500 transition-all duration-200;
+    @apply w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-accentBlue/20 focus:border-accentBlue text-slate-900 placeholder-slate-400 transition-all duration-200 !important;
   }
+
   .label-text {
-    @apply block text-sm font-medium text-gray-300 mb-1.5;
+    @apply block text-sm font-semibold text-slate-700 mb-1.5;
   }
+
+  /* Tables */
   .table-container {
-    @apply w-full overflow-x-auto rounded-xl border border-gray-800 bg-lightNavy shadow-sm;
+    @apply w-full overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm;
+  }
+  
+  th {
+    @apply bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 !important;
+  }
+  
+  td {
+    @apply border-b border-slate-100 text-slate-700 !important;
   }
 }
 
 @layer utilities {
   .skeleton {
-    @apply relative overflow-hidden bg-gray-800 rounded-lg;
+    @apply relative overflow-hidden bg-slate-200 rounded-lg;
   }
   .skeleton::after {
     @apply absolute inset-0 -translate-x-full;
     content: "";
-    background-image: linear-gradient(90deg, rgba(255,255,255, 0) 0, rgba(255,255,255, 0.05) 20%, rgba(255,255,255, 0.1) 60%, rgba(255,255,255, 0));
+    background-image: linear-gradient(90deg, rgba(255,255,255, 0) 0, rgba(255,255,255, 0.2) 20%, rgba(255,255,255, 0.4) 60%, rgba(255,255,255, 0));
     animation: shimmer 2s infinite;
   }
   .animate-stagger-1 { animation-delay: 100ms; }
@@ -85,18 +81,108 @@
   .animate-stagger-3 { animation-delay: 300ms; }
 }
 
-/* Custom Scrollbar */
+/* Global Overrides for Light Theme Compatibility */
+
+/* 1. Map dark border classes to slate-200 */
+.border-gray-800, 
+.border-gray-700, 
+.border-gray-900,
+.border-dashed {
+  border-color: #E2E8F0 !important;
+}
+
+.divide-gray-800,
+.divide-gray-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #E2E8F0 !important;
+}
+
+/* 2. Override text-white to dark slate unless inside button, badge, or logo */
+.text-white:not(.btn-primary):not(.btn-secondary):not(.badge):not(.logo):not(button):not(a[class*="btn"]):not(span[class*="bg-accentBlue"]):not(span[class*="bg-green"]):not(span[class*="bg-amber"]):not(span[class*="bg-blue"]):not(span[class*="bg-indigo"]) {
+  color: #0F172A !important;
+}
+
+.text-gray-400 {
+  color: #64748B !important; /* slate-500 */
+}
+
+.text-gray-300 {
+  color: #475569 !important; /* slate-600 */
+}
+
+.text-gray-500 {
+  color: #94A3B8 !important; /* slate-400 */
+}
+
+/* 3. Enhance status badges for readability on white background */
+.bg-green-500\/10 {
+  background-color: #F0FDF4 !important; /* green-50 */
+  color: #166534 !important; /* green-800 */
+  border-color: #BBF7D0 !important; /* green-200 */
+}
+
+.bg-amber-500\/10, .bg-orange-500\/10 {
+  background-color: #FFFBEB !important; /* amber-50 */
+  color: #92400E !important; /* amber-800 */
+  border-color: #FEF08A !important; /* amber-200 */
+}
+
+.bg-blue-500\/10, .bg-indigo-500\/10 {
+  background-color: #EFF6FF !important; /* blue-50 */
+  color: #1E40AF !important; /* blue-800 */
+  border-color: #BFDBFE !important; /* blue-200 */
+}
+
+.bg-red-500\/10 {
+  background-color: #FEF2F2 !important; /* red-50 */
+  color: #991B1B !important; /* red-800 */
+  border-color: #FECACA !important; /* red-200 */
+}
+
+/* 4. Overrides for headers and text in components */
+.text-accentBlue {
+  color: #2563EB !important;
+}
+
+/* Navigation overlays / backgrounds */
+nav.bg-darkNavy\/90 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: #E2E8F0 !important;
+}
+
+nav span.text-white {
+  color: #0F172A !important;
+}
+
+/* Sidebars and menu wrappers */
+aside.bg-lightNavy, 
+.md\:hidden.bg-lightNavy,
+div[class*="bg-lightNavy"] {
+  background-color: #F8FAFC !important;
+  border-color: #E2E8F0 !important;
+}
+
+/* Sidebar active link logic */
+a[class*="bg-accentBlue"] * {
+  color: #FFFFFF !important;
+}
+
+/* Fix inner icons colors on hover in dark elements */
+.group:hover .text-gray-400 {
+  color: #2563EB !important;
+}
+
+/* Custom Scrollbar for Light Theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A1128;
+  background: #F1F5F9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2563EB;
+  background: #CBD5E1;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #1D4ED8;
+  background: #94A3B8;
 }

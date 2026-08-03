@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        darkNavy: '#0A1128',
-        lightNavy: '#16203B',
+        darkNavy: '#FFFFFF',
+        lightNavy: '#F8FAFC',
         accentBlue: '#2563EB',
         hoverBlue: '#1D4ED8',
       },

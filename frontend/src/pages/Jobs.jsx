@@ -33,13 +33,10 @@ const Jobs = () => {
                     <p className="text-gray-400 text-lg">Find your next internship or full-time position.</p>
                 </div>
                 <div className="relative w-full md:w-auto">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Search className="h-5 w-5 text-gray-500" />
-                    </div>
                     <input 
                         type="text" 
                         placeholder="Search titles or locations..." 
-                        className="input-field pl-12 w-full md:w-80 shadow-inner"
+                        className="input-field w-full md:w-80 shadow-inner"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
