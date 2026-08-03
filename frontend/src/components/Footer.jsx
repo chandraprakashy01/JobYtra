@@ -21,20 +21,20 @@ import {
 
 /* ─── Inline SVG social icons (lucide-react has no platform icons) ── */
 const LinkedInIcon = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
     <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
   </svg>
 );
 
 const TwitterXIcon = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
   </svg>
 );
 
 const InstagramIcon = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
@@ -79,7 +79,7 @@ const socialLinks = [
 /* ─── Sub-components ────────────────────────────────────────────────── */
 const FooterSection = ({ title, links }) => (
   <div>
-    <h3 className="text-white font-semibold text-sm uppercase tracking-widest mb-5 pb-2 border-b border-gray-700/60">
+    <h3 className="text-slate-900 font-semibold text-sm uppercase tracking-widest mb-5 pb-2 border-b border-slate-200">
       {title}
     </h3>
     <ul className="space-y-3">
@@ -87,9 +87,9 @@ const FooterSection = ({ title, links }) => (
         <li key={label}>
           <Link
             to={to}
-            className="group flex items-center gap-2 text-gray-400 text-sm hover:text-accentBlue transition-colors duration-200"
+            className="group flex items-center gap-2 text-slate-600 text-sm hover:text-accentBlue transition-colors duration-200"
           >
-            <Icon className="w-3.5 h-3.5 flex-shrink-0 text-gray-600 group-hover:text-accentBlue transition-colors duration-200" />
+            <Icon className="w-3.5 h-3.5 flex-shrink-0 text-slate-400 group-hover:text-accentBlue transition-colors duration-200" />
             <span className="group-hover:translate-x-0.5 transition-transform duration-200 inline-block">
               {label}
             </span>
