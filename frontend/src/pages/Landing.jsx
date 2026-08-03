@@ -79,6 +79,39 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Hiring Partners Section */}
+      <section className="py-20 bg-darkNavy/20 relative border-b border-gray-800/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4 text-white">
+              Our Top Hiring Partners
+            </h2>
+            <p className="text-gray-400 text-lg">Leading tech clients actively recruiting talent from JobYtra</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { name: 'Google', desc: 'Search, Cloud & AI Solutions', logoColor: 'from-blue-500 via-red-500 to-yellow-500' },
+              { name: 'Microsoft', desc: 'Cloud & Productivity Software', logoColor: 'from-blue-600 to-cyan-500' },
+              { name: 'Amazon', desc: 'E-Commerce & AWS Cloud Services', logoColor: 'from-amber-500 to-orange-600' },
+              { name: 'Meta', desc: 'Social Technologies & Metaverse', logoColor: 'from-blue-500 to-indigo-600' },
+              { name: 'Netflix', desc: 'Global Entertainment & Streaming', logoColor: 'from-red-600 to-red-800' },
+              { name: 'Adobe', desc: 'Creative Cloud & Document Solutions', logoColor: 'from-red-500 to-rose-600' },
+              { name: 'Razorpay', desc: 'Fintech & Payment Gateway Systems', logoColor: 'from-blue-400 to-indigo-500' },
+              { name: 'Zomato', desc: 'Food Delivery & Restaurant Discovery', logoColor: 'from-red-500 to-red-600' }
+            ].map((client, idx) => (
+              <div key={idx} className="card p-6 flex flex-col items-center justify-center text-center border-gray-800 bg-[#161d36]/30 hover:border-accentBlue/30 hover:-translate-y-1 transition-all duration-300">
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${client.logoColor} flex items-center justify-center text-white font-black text-xl mb-4 shadow-lg shadow-white/5`}>
+                  {client.name.charAt(0)}
+                </div>
+                <h4 className="text-lg font-bold text-white mb-1">{client.name}</h4>
+                <p className="text-gray-500 text-xs">{client.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Top Students */}
       <section className="py-24 bg-darkNavy/40 backdrop-blur-md relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
