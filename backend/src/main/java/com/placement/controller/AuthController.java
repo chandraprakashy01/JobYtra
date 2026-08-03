@@ -36,6 +36,9 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    com.placement.service.EmailService emailService;
+
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -91,5 +94,41 @@ public class AuthController {
         companyRepository.save(company);
 
         return ResponseEntity.ok(new MessageResponse("Company registered successfully! Wait for verification."));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        String email = request.getEmail();
+        Student student = studentRepository.findByEmail(email).orElse(null);
+        Company company = companyRepository.findByEmail(email).orElse(null);
+
+        if (student == null && company == null) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email not found!"));
+        }
+
+        // Generate temporary password
+        String tempPassword = "Temp@" + (int)(Math.random() * 900000 + 100000);
+        String encodedPassword = encoder.encode(tempPassword);
+
+        if (student != null) {
+            student.setPassword(encodedPassword);
+            studentRepository.save(student);
+        } else {
+            company.setPassword(encodedPassword);
+            companyRepository.save(company);
+        }
+
+        // Send email
+        String emailSubject = "JobYtra - Password Reset Request";
+        String emailBody = "Hello,\n\n" +
+                "Your password has been successfully reset. Below is your temporary password to log in:\n\n" +
+                "Temporary Password: " + tempPassword + "\n\n" +
+                "Please log in and update your password immediately in your profile settings.\n\n" +
+                "Best regards,\n" +
+                "JobYtra Placement Cell";
+        
+        emailService.sendEmail(email, emailSubject, emailBody);
+
+        return ResponseEntity.ok(new ForgotPasswordResponse("Temporary password generated and sent to email.", tempPassword));
     }
 }

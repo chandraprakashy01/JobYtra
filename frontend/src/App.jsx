@@ -21,6 +21,7 @@ import Internships from './pages/Internships';
 import FAQ from './pages/FAQ';
 import HelpCenter from './pages/HelpCenter';
 import HostEvent from './pages/HostEvent';
+import ForgotPassword from './pages/ForgotPassword';
 
 // Student Pages
 import StudentDashboard from './pages/student/StudentDashboard';
@@ -63,6 +64,7 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/register" element={<Register />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/jobs/:id" element={<JobDetail />} />
