@@ -17,7 +17,7 @@ services:
     name: jobytra-job-fare-backend
     runtime: java
     rootDir: backend
-    buildCommand: ./mvnw clean package -DskipTests
+    buildCommand: chmod +x ./mvnw && ./mvnw clean package -DskipTests
     startCommand: java -jar target/placement-portal-0.0.1-SNAPSHOT.jar
     envVars:
       # Java version - must be 21 for Lombok compatibility

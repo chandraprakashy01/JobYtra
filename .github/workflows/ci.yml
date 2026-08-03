@@ -58,4 +58,4 @@ jobs:
           cache: maven
 
       - name: Build with Maven (skip tests)
-        run: ./mvnw clean package -DskipTests
+        run: chmod +x mvnw && ./mvnw clean package -DskipTests
