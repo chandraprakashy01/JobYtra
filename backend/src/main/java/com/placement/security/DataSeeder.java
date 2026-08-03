@@ -18,13 +18,12 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (adminRepository.count() == 0) {
-            Admin admin = new Admin();
-            admin.setEmail("admin@jobytra.com");
-            admin.setPassword(passwordEncoder.encode("admin123"));
-            admin.setRole("ROLE_ADMIN");
-            adminRepository.save(admin);
-            System.out.println("Default admin user created: admin@jobytra.com / admin123");
-        }
+        java.util.Optional<Admin> existingAdmin = adminRepository.findByEmail("Abc@gmail.com");
+        Admin admin = existingAdmin.orElse(new Admin());
+        admin.setEmail("Abc@gmail.com");
+        admin.setPassword(passwordEncoder.encode("Abc@123"));
+        admin.setRole("ROLE_ADMIN");
+        adminRepository.save(admin);
+        System.out.println("Default admin user ensured: Abc@gmail.com / Abc@123");
     }
 }
