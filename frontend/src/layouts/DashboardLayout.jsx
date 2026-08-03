@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { LayoutDashboard, FileText, User, PlusCircle, Users, BarChart, Briefcase, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FileText, User, PlusCircle, Users, BarChart, Briefcase, Menu, X, Sparkles } from 'lucide-react';
 
 const DashboardLayout = ({ role }) => {
   const location = useLocation();
@@ -14,6 +14,7 @@ const DashboardLayout = ({ role }) => {
           { name: 'Dashboard', path: '/student/dashboard', icon: LayoutDashboard },
           { name: 'Profile', path: '/student/profile', icon: User },
           { name: 'My Applications', path: '/student/applications', icon: FileText },
+          { name: 'AI Tools', path: '/student/ai', icon: Sparkles },
         ];
       case 'company':
         return [

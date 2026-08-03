@@ -27,6 +27,11 @@ import ForgotPassword from './pages/ForgotPassword';
 import StudentDashboard from './pages/student/StudentDashboard';
 import StudentProfile from './pages/student/StudentProfile';
 import StudentApplications from './pages/student/StudentApplications';
+import AIToolsHub from './pages/student/AIToolsHub';
+import ResumeAnalyzer from './pages/student/ResumeAnalyzer';
+import ResumeJobMatch from './pages/student/ResumeJobMatch';
+import CoverLetterGenerator from './pages/student/CoverLetterGenerator';
+import InterviewCoach from './pages/student/InterviewCoach';
 
 // Company Pages
 import CompanyDashboard from './pages/company/CompanyDashboard';
@@ -88,6 +93,11 @@ function App() {
           <Route path="dashboard" element={<StudentDashboard />} />
           <Route path="profile" element={<StudentProfile />} />
           <Route path="applications" element={<StudentApplications />} />
+          <Route path="ai" element={<AIToolsHub />} />
+          <Route path="ai/resume-analyzer" element={<ResumeAnalyzer />} />
+          <Route path="ai/job-match" element={<ResumeJobMatch />} />
+          <Route path="ai/cover-letter" element={<CoverLetterGenerator />} />
+          <Route path="ai/interview-coach" element={<InterviewCoach />} />
         </Route>
 
         {/* Company Routes */}
