@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import {
   MessagesSquare, ChevronLeft, Loader2, ChevronDown, ChevronUp,
-  Lightbulb, CheckCircle, ArrowRight, User, BarChart3, Zap
+  Lightbulb, CheckCircle, ArrowRight
 } from 'lucide-react';
 
 const skillOptions = [
@@ -156,15 +156,12 @@ const InterviewCoach = () => {
           {/* Role */}
           <div>
             <label className="label-text">Target Role</label>
-            <div className="relative">
-              <User className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
-              <input
-                className="input-field pl-9"
-                placeholder="e.g., Software Engineer, Full Stack Developer, Data Analyst"
-                value={role}
-                onChange={e => setRole(e.target.value)}
-              />
-            </div>
+            <input
+              className="input-field"
+              placeholder="e.g., Software Engineer, Full Stack Developer, Data Analyst"
+              value={role}
+              onChange={e => setRole(e.target.value)}
+            />
           </div>
 
           {/* Skills */}
@@ -193,7 +190,7 @@ const InterviewCoach = () => {
           <div className="grid grid-cols-2 gap-4">
             {/* Experience */}
             <div>
-              <label className="label-text flex items-center gap-1.5"><BarChart3 className="w-4 h-4 text-slate-400" /> Experience Level</label>
+              <label className="label-text">Experience Level</label>
               <div className="flex flex-wrap gap-2 mt-2">
                 {experienceLevels.map(level => (
                   <button
@@ -213,7 +210,7 @@ const InterviewCoach = () => {
 
             {/* Difficulty */}
             <div>
-              <label className="label-text flex items-center gap-1.5"><Zap className="w-4 h-4 text-slate-400" /> Difficulty</label>
+              <label className="label-text">Difficulty</label>
               <div className="flex gap-2 mt-2">
                 {difficulties.map(d => (
                   <button

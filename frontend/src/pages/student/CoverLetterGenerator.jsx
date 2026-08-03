@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import {
   FileText, Upload, CheckCircle, AlertCircle, ChevronLeft,
-  Loader2, Copy, Download, RefreshCw, Building2
+  Loader2, Copy, Download, RefreshCw
 } from 'lucide-react';
 
 const tones = [
@@ -128,15 +128,12 @@ const CoverLetterGenerator = () => {
             <div className="space-y-4">
               <div>
                 <label className="label-text">Company Name</label>
-                <div className="relative">
-                  <Building2 className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
-                  <input
-                    className="input-field pl-9"
-                    placeholder="e.g., Google, Microsoft, Razorpay"
-                    value={companyName}
-                    onChange={e => setCompanyName(e.target.value)}
-                  />
-                </div>
+                <input
+                  className="input-field"
+                  placeholder="e.g., Google, Microsoft, Razorpay"
+                  value={companyName}
+                  onChange={e => setCompanyName(e.target.value)}
+                />
               </div>
               <div>
                 <label className="label-text">Job Description</label>
