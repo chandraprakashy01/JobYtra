@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { Link } from 'react-router-dom';
-import { Briefcase, Users, PlusCircle, ExternalLink, Calendar, MapPin, Edit, FileText } from 'lucide-react';
+import { Briefcase, Users, PlusCircle, ExternalLink, Calendar, MapPin, Edit, FileText, Brain } from 'lucide-react';
 
 const CompanyDashboard = () => {
     const [jobs, setJobs] = useState([]);
@@ -94,6 +94,9 @@ const CompanyDashboard = () => {
                             <div className="flex flex-col sm:flex-row gap-3">
                                 <Link to={`/jobs/${job.id}`} className="btn-secondary flex items-center justify-center bg-gray-800/80 hover:bg-gray-700">
                                     <ExternalLink className="w-4 h-4 mr-2" /> View Public
+                                </Link>
+                                <Link to={`/company/job/${job.id}/ai-match`} className="btn-secondary flex items-center justify-center border-accentBlue/30 hover:border-accentBlue/50 text-accentBlue hover:bg-accentBlue/10">
+                                    <Brain className="w-4 h-4 mr-2" /> AI Matcher
                                 </Link>
                                 <Link to={`/company/job/${job.id}/applicants`} className="btn-primary flex items-center justify-center shadow-lg shadow-accentBlue/20">
                                     <Users className="w-4 h-4 mr-2" /> View Applicants

@@ -27,6 +27,7 @@ import StudentApplications from './pages/student/StudentApplications';
 import CompanyDashboard from './pages/company/CompanyDashboard';
 import PostJob from './pages/company/PostJob';
 import ApplicantsList from './pages/company/ApplicantsList';
+import AICandidateMatch from './pages/company/AICandidateMatch';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -88,6 +89,7 @@ function App() {
           <Route path="dashboard" element={<CompanyDashboard />} />
           <Route path="post-job" element={<PostJob />} />
           <Route path="job/:id/applicants" element={<ApplicantsList />} />
+          <Route path="job/:id/ai-match" element={<AICandidateMatch />} />
         </Route>
 
         {/* Admin Routes */}
