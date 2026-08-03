@@ -120,7 +120,7 @@ const Footer = () => {
                 <Briefcase className="w-5 h-5 text-accentBlue" />
               </div>
               <span className="text-lg font-heading font-bold text-slate-900 tracking-wide logo">
-                JobYtra Job Fare
+                JobYtra
               </span>
             </Link>
             <p className="text-gray-600 text-sm leading-relaxed mt-3 max-w-xs">
@@ -156,7 +156,7 @@ const Footer = () => {
           {/* Copyright */}
           <p className="text-gray-500 text-xs text-center sm:text-left">
             © {year}{' '}
-            <span className="text-gray-600 font-medium">JobYtra Job Fare</span>
+            <span className="text-gray-600 font-medium">JobYtra</span>
             . All rights reserved.
           </p>
 

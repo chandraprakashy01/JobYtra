@@ -17,6 +17,10 @@ import Events from './pages/Events';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Contact from './pages/Contact';
+import Internships from './pages/Internships';
+import FAQ from './pages/FAQ';
+import HelpCenter from './pages/HelpCenter';
+import HostEvent from './pages/HostEvent';
 
 // Student Pages
 import StudentDashboard from './pages/student/StudentDashboard';
@@ -67,6 +71,10 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/internships" element={<Internships />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/help" element={<HelpCenter />} />
+          <Route path="/events/host" element={<HostEvent />} />
         </Route>
 
         {/* Student Routes */}
