@@ -4,10 +4,10 @@ import { Calendar, MapPin, Clock, Users, ChevronRight, Filter } from 'lucide-rea
 const eventsList = [
   {
     id: 1,
-    title: 'SRGI Mega Job Fair 2026',
+    title: 'JobYtra Mega Job Fair 2026',
     date: 'May 15, 2026',
     time: '9:00 AM – 5:00 PM',
-    venue: 'SRGI Main Auditorium, Jabalpur',
+    venue: 'JobYtra Main Auditorium, Jabalpur',
     type: 'Job Fair',
     slots: 120,
     companies: 30,
@@ -43,7 +43,7 @@ const eventsList = [
     title: 'Core Engineering Recruitment Drive',
     date: 'March 10, 2026',
     time: '9:00 AM – 4:00 PM',
-    venue: 'SRGI Campus',
+    venue: 'JobYtra Campus',
     type: 'Job Fair',
     slots: 60,
     companies: 8,
@@ -80,7 +80,7 @@ const Events = () => {
           </span>
         </h1>
         <p className="text-gray-400 text-lg max-w-xl mx-auto">
-          Stay up to date with all placement drives, internship events, and career workshops happening at SRGI.
+          Stay up to date with all placement drives, internship events, and career workshops happening at JobYtra.
         </p>
       </div>
 

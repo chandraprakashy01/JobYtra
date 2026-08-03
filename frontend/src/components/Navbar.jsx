@@ -22,7 +22,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 group">
               <Briefcase className="h-8 w-8 text-accentBlue transition-transform duration-300 group-hover:scale-110" />
-              <span className="text-xl font-heading font-bold text-white tracking-wide">SRGI Job Fare</span>
+              <span className="text-xl font-heading font-bold text-white tracking-wide">JobYtra Job Fare</span>
             </Link>
           </div>
 

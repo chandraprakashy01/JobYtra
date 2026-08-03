@@ -1,18 +1,23 @@
 package com.placement.model;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Data
-@Document(collection = "companies")
+@Entity
+@Table(name = "companies")
 public class Company {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
     
-    @Indexed(unique = true)
+    @Column(unique = true)
     private String email;
     private String password;
     private String website;

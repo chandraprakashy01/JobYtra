@@ -9,7 +9,7 @@ const stats = [
 ];
 
 const values = [
-  { icon: Target, title: 'Our Mission', desc: 'To bridge the gap between talented SRGI students and leading recruiters by providing a seamless, modern placement experience.' },
+  { icon: Target, title: 'Our Mission', desc: 'To bridge the gap between talented JobYtra students and leading recruiters by providing a seamless, modern placement experience.' },
   { icon: Globe,  title: 'Our Vision',  desc: 'To become the most trusted college placement platform in Central India, empowering every student to find their ideal career.' },
   { icon: Award,  title: 'Our Values',  desc: 'Transparency, excellence, and student-first thinking drive every feature we build and every partnership we forge.' },
 ];
@@ -21,16 +21,16 @@ const About = () => (
     <div className="text-center mb-16">
       <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-accentBlue/10 border border-accentBlue/25 rounded-full text-accentBlue text-sm font-medium mb-6">
         <Briefcase className="w-4 h-4" />
-        About SRGI Job Fare
+        About JobYtra Job Fare
       </div>
       <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white mb-6 leading-tight">
         Empowering Careers at{' '}
         <span className="bg-gradient-to-r from-accentBlue to-blue-400 bg-clip-text text-transparent">
-          SRGI
+          JobYtra
         </span>
       </h1>
       <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-        SRGI Job Fare is the official campus placement portal of Shri Ram Group of Institutions. We connect driven students with top-tier recruiters across industries — making careers happen, one opportunity at a time.
+        JobYtra Job Fare is the official campus placement portal of Shri Ram Group of Institutions. We connect driven students with top-tier recruiters across industries — making careers happen, one opportunity at a time.
       </p>
     </div>
 
@@ -69,10 +69,10 @@ const About = () => (
     <div className="card bg-accentBlue/5 border-accentBlue/20 text-center">
       <h2 className="text-xl font-heading font-bold text-white mb-3">Shri Ram Group of Institutions</h2>
       <p className="text-gray-400 text-sm leading-relaxed max-w-xl mx-auto">
-        Located in Jabalpur, Madhya Pradesh, SRGI is one of Central India's premier engineering and management institutions, consistently producing industry-ready graduates since 1998.
+        Located in Jabalpur, Madhya Pradesh, JobYtra is one of Central India's premier engineering and management institutions, consistently producing industry-ready graduates since 1998.
       </p>
       <a
-        href="mailto:placements@srgi.edu.in"
+        href="mailto:placements@jobytra.edu.in"
         className="inline-block mt-6 btn-primary"
       >
         Contact Placement Cell

@@ -38,9 +38,9 @@ const Contact = () => {
         {/* Info panel */}
         <div className="lg:col-span-2 space-y-6">
           {[
-            { icon: Mail,  label: 'Email',   value: 'placements@srgi.edu.in', href: 'mailto:placements@srgi.edu.in' },
+            { icon: Mail,  label: 'Email',   value: 'placements@jobytra.edu.in', href: 'mailto:placements@jobytra.edu.in' },
             { icon: Phone, label: 'Phone',   value: '+91-761-XXXXXXX',        href: 'tel:+91761XXXXXXX' },
-            { icon: MapPin,label: 'Address', value: 'SRGI Campus, Ring Road No. 1, Jabalpur, MP – 482001', href: null },
+            { icon: MapPin,label: 'Address', value: 'JobYtra Campus, Ring Road No. 1, Jabalpur, MP – 482001', href: null },
             { icon: Clock, label: 'Hours',   value: 'Mon – Sat: 9:00 AM – 5:00 PM', href: null },
           ].map(({ icon: Icon, label, value, href }) => (
             <div key={label} className="card flex items-start gap-4">
@@ -83,7 +83,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <label className="label-text">Email Address</label>
-                  <input type="email" name="email" value={form.email} onChange={handle} required placeholder="you@srgi.edu.in" className="input-field" />
+                  <input type="email" name="email" value={form.email} onChange={handle} required placeholder="you@jobytra.edu.in" className="input-field" />
                 </div>
               </div>
 

@@ -1,23 +1,30 @@
 package com.placement.model;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.util.List;
 
 @Data
-@Document(collection = "students")
+@Entity
+@Table(name = "students")
 public class Student {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
     
-    @Indexed(unique = true)
+    @Column(unique = true)
     private String email;
     private String password;
     private String branch; // CSE|IT|ECE|ME|CE
     private Float cgpa;
+    @ElementCollection
     private List<String> skills;
     private String resumeUrl;
     private Boolean isApproved = false;

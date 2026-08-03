@@ -120,20 +120,20 @@ const Footer = () => {
                 <Briefcase className="w-5 h-5 text-accentBlue" />
               </div>
               <span className="text-lg font-heading font-bold text-white tracking-wide">
-                SRGI Job Fare
+                JobYtra Job Fare
               </span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mt-3 max-w-xs">
-              Connecting SRGI students with top recruiters. Discover opportunities, launch careers, and build your future — all in one platform.
+              Connecting JobYtra students with top recruiters. Discover opportunities, launch careers, and build your future — all in one platform.
             </p>
 
             {/* Email badge */}
             <a
-              href="mailto:placements@srgi.edu.in"
+              href="mailto:placements@jobytra.edu.in"
               className="inline-flex items-center gap-2 mt-5 text-xs text-gray-400 hover:text-accentBlue transition-colors duration-200 group"
             >
               <Mail className="w-3.5 h-3.5 text-gray-600 group-hover:text-accentBlue transition-colors duration-200" />
-              placements@srgi.edu.in
+              placements@jobytra.edu.in
               <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
             </a>
           </div>
@@ -156,7 +156,7 @@ const Footer = () => {
           {/* Copyright */}
           <p className="text-gray-500 text-xs text-center sm:text-left">
             © {year}{' '}
-            <span className="text-gray-400 font-medium">SRGI Job Fare</span>
+            <span className="text-gray-400 font-medium">JobYtra Job Fare</span>
             . All rights reserved.
           </p>
 

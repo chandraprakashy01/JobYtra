@@ -5,7 +5,7 @@ services:
   # ─── MongoDB ────────────────────────────────────────────────────────────────
   mongo:
     image: mongo:7-jammy
-    container_name: srgi_mongo
+    container_name: jobytra_mongo
     restart: unless-stopped
     environment:
       MONGO_INITDB_DATABASE: placement_db
@@ -14,14 +14,14 @@ services:
     ports:
       - "27017:27017"        # expose for local Compass connection
     networks:
-      - srgi_net
+      - jobytra_net
 
   # ─── Spring Boot Backend ────────────────────────────────────────────────────
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: srgi_backend
+    container_name: jobytra_backend
     restart: unless-stopped
     depends_on:
       - mongo
@@ -35,21 +35,21 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - srgi_net
+      - jobytra_net
 
   # ─── React + Nginx Frontend ─────────────────────────────────────────────────
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: srgi_frontend
+    container_name: jobytra_frontend
     restart: unless-stopped
     depends_on:
       - backend
     ports:
       - "80:80"
     networks:
-      - srgi_net
+      - jobytra_net
 
 # ─── Volumes & Networks ───────────────────────────────────────────────────────
 volumes:
@@ -57,5 +57,5 @@ volumes:
     driver: local
 
 networks:
-  srgi_net:
+  jobytra_net:
     driver: bridge

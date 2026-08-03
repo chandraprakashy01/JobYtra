@@ -69,7 +69,7 @@ const Privacy = () => (
       <h1 className="text-4xl font-heading font-bold text-white mb-4">Your Privacy Matters</h1>
       <p className="text-gray-400 text-sm">Last updated: April 27, 2026</p>
       <p className="text-gray-400 mt-4 max-w-xl mx-auto leading-relaxed">
-        SRGI Job Fare is committed to protecting your personal information. This policy explains what data we collect, why we collect it, and how we keep it safe.
+        JobYtra Job Fare is committed to protecting your personal information. This policy explains what data we collect, why we collect it, and how we keep it safe.
       </p>
     </div>
 
@@ -100,8 +100,8 @@ const Privacy = () => (
       <Mail className="w-8 h-8 text-accentBlue mx-auto mb-3" />
       <h3 className="text-white font-semibold mb-2">Questions about your privacy?</h3>
       <p className="text-gray-400 text-sm mb-4">Reach out to our placement cell and we'll respond within 48 hours.</p>
-      <a href="mailto:placements@srgi.edu.in" className="btn-primary inline-block">
-        placements@srgi.edu.in
+      <a href="mailto:placements@jobytra.edu.in" className="btn-primary inline-block">
+        placements@jobytra.edu.in
       </a>
     </div>
   </div>

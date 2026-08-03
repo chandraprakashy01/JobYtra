@@ -6,7 +6,7 @@ const sections = [
     icon: UserCheck,
     title: '1. Eligibility & Account Responsibility',
     content: [
-      'SRGI Job Fare is available exclusively to currently enrolled SRGI students, faculty, and verified recruiting companies.',
+      'JobYtra Job Fare is available exclusively to currently enrolled JobYtra students, faculty, and verified recruiting companies.',
       'You are responsible for maintaining the confidentiality of your account credentials.',
       'You must provide accurate, complete, and up-to-date information during registration.',
       'Each person may maintain only one active account on the platform.',
@@ -29,7 +29,7 @@ const sections = [
     title: '3. Content & Intellectual Property',
     content: [
       'Content you upload (resumes, job postings) remains your property; you grant us a limited licence to display it.',
-      'SRGI Job Fare branding, design, and source code are protected intellectual property.',
+      'JobYtra Job Fare branding, design, and source code are protected intellectual property.',
       'Job postings must accurately represent roles; misleading postings will be removed.',
       'You may not reproduce or redistribute platform content without written permission.',
     ],
@@ -48,7 +48,7 @@ const sections = [
     icon: ScrollText,
     title: '5. Limitation of Liability',
     content: [
-      'SRGI Job Fare is a facilitator; we are not responsible for the outcome of job applications.',
+      'JobYtra Job Fare is a facilitator; we are not responsible for the outcome of job applications.',
       'We do not guarantee placement, interviews, or employment for any user.',
       'The platform is provided "as is" without warranties of any kind.',
       'Our liability to you shall not exceed the amount paid (if any) for platform access.',
@@ -68,7 +68,7 @@ const Terms = () => (
       <h1 className="text-4xl font-heading font-bold text-white mb-4">Terms of Service</h1>
       <p className="text-gray-400 text-sm">Last updated: April 27, 2026</p>
       <p className="text-gray-400 mt-4 max-w-xl mx-auto leading-relaxed">
-        By accessing and using SRGI Job Fare, you agree to be bound by these Terms of Service. Please read them carefully before using the platform.
+        By accessing and using JobYtra Job Fare, you agree to be bound by these Terms of Service. Please read them carefully before using the platform.
       </p>
     </div>
 
@@ -99,10 +99,10 @@ const Terms = () => (
       <Mail className="w-8 h-8 text-accentBlue mx-auto mb-3" />
       <h3 className="text-white font-semibold mb-2">Have a legal question?</h3>
       <p className="text-gray-400 text-sm mb-4">
-        For any concerns about these terms, contact the SRGI Placement Cell directly.
+        For any concerns about these terms, contact the JobYtra Placement Cell directly.
       </p>
-      <a href="mailto:placements@srgi.edu.in" className="btn-primary inline-block">
-        placements@srgi.edu.in
+      <a href="mailto:placements@jobytra.edu.in" className="btn-primary inline-block">
+        placements@jobytra.edu.in
       </a>
     </div>
   </div>

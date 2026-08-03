@@ -1,7 +1,7 @@
 services:
   # ─── Frontend (React + Vite) ──────────────────────────────────────────────
   - type: web
-    name: srgi-job-fare-frontend
+    name: jobytra-job-fare-frontend
     runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
@@ -14,7 +14,7 @@ services:
 
   # ─── Backend (Spring Boot + Java 21) ──────────────────────────────────────
   - type: web
-    name: srgi-job-fare-backend
+    name: jobytra-job-fare-backend
     runtime: java
     rootDir: backend
     buildCommand: ./mvnw clean package -DskipTests

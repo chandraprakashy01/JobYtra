@@ -1,20 +1,29 @@
 package com.placement.model;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.util.Date;
 
 @Data
-@Document(collection = "jobs")
+@Entity
+@Table(name = "jobs")
 public class Job {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String title;
     private String companyId;
+    @Column(columnDefinition = "TEXT")
     private String description;
     
+    @Embedded
     private Eligibility eligibility;
     
     private String salary;

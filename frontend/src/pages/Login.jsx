@@ -37,7 +37,7 @@ const Login = () => {
             <LogIn className="w-8 h-8 text-accentBlue" />
           </div>
           <h2 className="text-3xl font-bold font-heading mb-2">Welcome Back</h2>
-          <p className="text-gray-400">Login to access your dashboard</p>
+          <p className="text-gray-400">Login to your Student, Company, or Admin dashboard</p>
         </div>
         
         {error && (
