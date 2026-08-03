@@ -147,5 +147,81 @@ public class DataSeeder implements CommandLineRunner {
 
             System.out.println("Dummy Jobs seeded: Software Engineer Intern, Machine Learning Associate");
         }
+
+        // 5. Seed 10 Additional Dummy Companies & Jobs/Internships
+        String[][] companiesData = {
+            {"Microsoft", "microsoft@gmail.com", "Redmond-based tech giant focusing on cloud, AI, and OS.", "https://microsoft.com"},
+            {"TCS", "tcs@gmail.com", "Tata Consultancy Services is a global leader in IT services, consulting & business solutions.", "https://tcs.com"},
+            {"Infosys", "infosys@gmail.com", "Infosys is a global leader in next-generation digital services and consulting.", "https://infosys.com"},
+            {"Razorpay", "razorpay@gmail.com", "Razorpay is India's leading payments solution provider for businesses.", "https://razorpay.com"},
+            {"Netflix", "netflix@gmail.com", "Netflix is a premier entertainment service with millions of paid memberships.", "https://netflix.com"},
+            {"Amazon", "amazon@gmail.com", "Amazon is a multinational tech company focusing on e-commerce, cloud, and AI.", "https://amazon.com"},
+            {"Meta", "meta@gmail.com", "Meta builds technologies that help people connect, find communities, and grow businesses.", "https://meta.com"},
+            {"Flipkart", "flipkart@gmail.com", "Flipkart is one of India's leading digital commerce marketplaces.", "https://flipkart.com"},
+            {"Zomato", "zomato@gmail.com", "Zomato is a technology platform connecting customers, restaurant partners, and delivery partners.", "https://zomato.com"},
+            {"Adobe", "adobe@gmail.com", "Adobe is the global leader in digital media and digital marketing solutions.", "https://adobe.com"}
+        };
+
+        for (String[] cData : companiesData) {
+            String name = cData[0];
+            String email = cData[1];
+            String about = cData[2];
+            String website = cData[3];
+
+            Company c = companyRepository.findByEmail(email).orElse(null);
+            if (c == null) {
+                c = new Company();
+                c.setName(name);
+                c.setEmail(email);
+                c.setPassword(passwordEncoder.encode("Company@123"));
+                c.setWebsite(website);
+                c.setAbout(about);
+                c.setIsVerified(true);
+                companyRepository.save(c);
+                System.out.println("Seeded Company: " + name);
+            }
+
+            // Seed jobs/internships for this company
+            if (jobRepository.findByCompanyId(c.getId()).isEmpty()) {
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.MONTH, 1);
+                Date deadline = cal.getTime();
+
+                // Internships for Microsoft, Razorpay, Netflix, Zomato, Adobe
+                // Full-time for TCS, Infosys, Amazon, Meta, Flipkart
+                boolean isInternship = List.of("Microsoft", "Razorpay", "Netflix", "Zomato", "Adobe").contains(name);
+
+                Job jobObj = new Job();
+                jobObj.setCompanyId(c.getId());
+                jobObj.setDeadline(deadline);
+                jobObj.setIsApproved(true);
+
+                if (isInternship) {
+                    jobObj.setTitle(name + " Software Intern");
+                    jobObj.setDescription("Join " + name + " as a Software Development Intern. You will work on production systems, write automated tests, and collaborate with product teams.");
+                    jobObj.setSalary("45k/month");
+                    jobObj.setLocation("Bangalore (Hybrid)");
+                    jobObj.setType("internship");
+
+                    Eligibility el = new Eligibility();
+                    el.setMinCgpa(7.0f);
+                    el.setBranches(List.of("CSE", "IT", "ECE"));
+                    jobObj.setEligibility(el);
+                } else {
+                    jobObj.setTitle(name + " Graduate Analyst");
+                    jobObj.setDescription("Join " + name + " as a Graduate Engineer/Analyst. You will build highly scalable REST microservices, monitor production systems, and design robust architectures.");
+                    jobObj.setSalary("12 LPA");
+                    jobObj.setLocation("Pune / Hyderabad");
+                    jobObj.setType("full-time");
+
+                    Eligibility el = new Eligibility();
+                    el.setMinCgpa(6.5f);
+                    el.setBranches(List.of("CSE", "IT", "ECE", "MECH"));
+                    jobObj.setEligibility(el);
+                }
+                jobRepository.save(jobObj);
+                System.out.println("Seeded Job for Company: " + name);
+            }
+        }
     }
 }
