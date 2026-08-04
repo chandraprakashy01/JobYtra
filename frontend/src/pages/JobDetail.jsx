@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
-import { Building2, MapPin, Calendar, IndianRupee, ArrowLeft, Briefcase, CheckCircle, Clock } from 'lucide-react';
+import { Building2, MapPin, Calendar, IndianRupee, ArrowLeft, Briefcase, CheckCircle, Clock, FileText, ExternalLink } from 'lucide-react';
+import { CompanyAvatar, getCompanyLogoUrl } from './Jobs';
 
 const JobDetail = () => {
     const { id } = useParams();
@@ -53,11 +54,14 @@ const JobDetail = () => {
                 </div>
                 <div className="card border-t-4 border-t-gray-800">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-                        <div className="w-full">
-                            <div className="h-10 w-3/4 md:w-1/2 skeleton rounded mb-4"></div>
-                            <div className="flex gap-4">
-                                <div className="h-5 w-32 skeleton rounded"></div>
-                                <div className="h-5 w-24 skeleton rounded"></div>
+                        <div className="flex items-center gap-4 w-full">
+                            <div className="w-16 h-16 skeleton rounded-xl flex-shrink-0"></div>
+                            <div className="w-full">
+                                <div className="h-10 w-3/4 md:w-1/2 skeleton rounded mb-4"></div>
+                                <div className="flex gap-4">
+                                    <div className="h-5 w-32 skeleton rounded"></div>
+                                    <div className="h-5 w-24 skeleton rounded"></div>
+                                </div>
                             </div>
                         </div>
                         <div className="h-12 w-full md:w-40 skeleton rounded-xl"></div>
@@ -90,6 +94,8 @@ const JobDetail = () => {
         );
     }
 
+    const logoUrl = getCompanyLogoUrl(job.companyWebsite, job.companyName);
+
     return (
         <div className="max-w-4xl mx-auto px-4 py-8 md:py-12 animate-fadeIn">
             <button onClick={() => navigate(-1)} className="flex items-center text-gray-400 hover:text-white mb-8 transition group font-medium">
@@ -104,13 +110,31 @@ const JobDetail = () => {
             )}
 
             <div className="card border-t-4 border-t-accentBlue p-6 md:p-10 shadow-lg shadow-black/20">
+                {/* Company + Job Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
-                    <div>
-                        <h1 className="text-3xl md:text-4xl font-bold font-heading mb-3">{job.title}</h1>
-                        <div className="flex flex-wrap items-center text-gray-400 gap-x-6 gap-y-2 font-medium">
-                            <span className="flex items-center"><Building2 className="w-5 h-5 mr-2 text-gray-500"/> Company #{job.companyId.substring(0, 5)}</span>
-                            <span className="flex items-center capitalize"><MapPin className="w-5 h-5 mr-2 text-gray-500"/> {job.location}</span>
-                            <span className="flex items-center text-accentBlue"><Clock className="w-5 h-5 mr-2"/> Posted Recently</span>
+                    <div className="flex items-start gap-5">
+                        <CompanyAvatar name={job.companyName} logoUrl={logoUrl} size="lg" />
+                        <div>
+                            <h1 className="text-3xl md:text-4xl font-bold font-heading mb-2">{job.title}</h1>
+                            <div className="flex flex-wrap items-center text-gray-400 gap-x-5 gap-y-2 font-medium">
+                                <span className="flex items-center font-semibold text-gray-200">
+                                    <Building2 className="w-4 h-4 mr-1.5 text-accentBlue"/>
+                                    {job.companyName || `Company #${job.companyId?.substring(0, 5)}`}
+                                </span>
+                                <span className="flex items-center capitalize"><MapPin className="w-4 h-4 mr-1.5 text-gray-500"/> {job.location}</span>
+                                <span className="flex items-center text-accentBlue"><Clock className="w-4 h-4 mr-1.5"/> Posted Recently</span>
+                            </div>
+                            {job.companyWebsite && (
+                                <a
+                                    href={job.companyWebsite.startsWith('http') ? job.companyWebsite : `https://${job.companyWebsite}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center text-xs text-gray-500 hover:text-accentBlue transition-colors mt-2"
+                                >
+                                    <ExternalLink className="w-3 h-3 mr-1" />
+                                    {job.companyWebsite}
+                                </a>
+                            )}
                         </div>
                     </div>
                     <button 
@@ -155,6 +179,15 @@ const JobDetail = () => {
                     </div>
                 </div>
 
+                {job.companyAbout && (
+                    <div className="mb-10 bg-darkNavy/30 p-6 rounded-xl border border-gray-800">
+                        <h3 className="text-lg font-bold mb-3 flex items-center">
+                            <Building2 className="w-5 h-5 mr-2 text-accentBlue" /> About {job.companyName}
+                        </h3>
+                        <p className="text-gray-400 leading-relaxed">{job.companyAbout}</p>
+                    </div>
+                )}
+
                 <div className="bg-darkNavy p-6 rounded-xl border border-gray-800">
                     <h3 className="text-lg font-bold mb-4 flex items-center">
                         <CheckCircle className="w-5 h-5 mr-2 text-accentBlue" /> Eligibility & Requirements
@@ -185,6 +218,4 @@ const JobDetail = () => {
     );
 };
 
-// Fix missing imports
-import { FileText } from 'lucide-react';
 export default JobDetail;

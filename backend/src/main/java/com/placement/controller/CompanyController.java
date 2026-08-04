@@ -46,6 +46,15 @@ public class CompanyController {
     @Autowired
     GeminiService geminiService;
 
+    @GetMapping("/profile")
+    public ResponseEntity<?> getMyProfile(Authentication authentication) {
+        String email = authentication.getName();
+        Company company = companyRepository.findByEmail(email).orElseThrow();
+        // Return company info without password
+        company.setPassword(null);
+        return ResponseEntity.ok(company);
+    }
+
     @GetMapping("/jobs")
     public ResponseEntity<List<Job>> getMyJobs(Authentication authentication) {
         String email = authentication.getName();

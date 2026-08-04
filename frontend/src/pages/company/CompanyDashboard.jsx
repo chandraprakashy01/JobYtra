@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { Link } from 'react-router-dom';
-import { Briefcase, Users, PlusCircle, ExternalLink, Calendar, MapPin, Edit, FileText, Brain } from 'lucide-react';
+import { Briefcase, Users, PlusCircle, ExternalLink, Calendar, MapPin, Edit, FileText, Brain, Building2 } from 'lucide-react';
+import { CompanyAvatar, getCompanyLogoUrl } from '../Jobs';
 
 const CompanyDashboard = () => {
     const [jobs, setJobs] = useState([]);
+    const [company, setCompany] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        api.get('/company/jobs')
-            .then(res => {
-                setJobs(res.data);
+        Promise.all([
+            api.get('/company/profile'),
+            api.get('/company/jobs'),
+        ])
+            .then(([profileRes, jobsRes]) => {
+                setCompany(profileRes.data);
+                setJobs(jobsRes.data);
                 setIsLoading(false);
             })
             .catch(err => {
@@ -22,12 +28,41 @@ const CompanyDashboard = () => {
     const activeJobs = jobs.filter(j => j.isApproved).length;
     const pendingJobs = jobs.filter(j => !j.isApproved).length;
 
+    const logoUrl = company ? getCompanyLogoUrl(company.website, company.name) : null;
+
     return (
         <div className="animate-fadeIn">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
-                <div>
-                    <h1 className="text-3xl font-heading font-bold mb-2">Company Dashboard</h1>
-                    <p className="text-gray-400">Manage your job postings and applicants.</p>
+                <div className="flex items-center gap-4">
+                    {isLoading ? (
+                        <div className="w-16 h-16 skeleton rounded-xl flex-shrink-0"></div>
+                    ) : (
+                        <CompanyAvatar name={company?.name} logoUrl={logoUrl} size="lg" />
+                    )}
+                    <div>
+                        {isLoading ? (
+                            <>
+                                <div className="h-8 w-48 skeleton rounded mb-2"></div>
+                                <div className="h-4 w-64 skeleton rounded"></div>
+                            </>
+                        ) : (
+                            <>
+                                <h1 className="text-3xl font-heading font-bold mb-1">{company?.name || 'Company Dashboard'}</h1>
+                                <p className="text-gray-400">Manage your job postings and applicants.</p>
+                                {company?.website && (
+                                    <a
+                                        href={company.website.startsWith('http') ? company.website : `https://${company.website}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center text-xs text-gray-500 hover:text-accentBlue transition-colors mt-1"
+                                    >
+                                        <ExternalLink className="w-3 h-3 mr-1" />
+                                        {company.website}
+                                    </a>
+                                )}
+                            </>
+                        )}
+                    </div>
                 </div>
                 <Link to="/company/post-job" className="btn-primary flex items-center shadow-lg shadow-accentBlue/20 px-6 py-3 whitespace-nowrap">
                     <PlusCircle className="w-5 h-5 mr-2" /> Post New Job
@@ -74,24 +109,28 @@ const CompanyDashboard = () => {
                 ) : jobs.length > 0 ? (
                     jobs.map(job => (
                         <div key={job.id} className="card flex flex-col md:flex-row justify-between md:items-center group hover:border-gray-700 transition-colors bg-gradient-to-r from-lightNavy/50 to-transparent">
-                            <div className="mb-6 md:mb-0">
-                                <div className="flex items-center gap-3 mb-3">
-                                    <h3 className="text-2xl font-bold text-white group-hover:text-accentBlue transition-colors">{job.title}</h3>
-                                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold inline-flex items-center border ${job.isApproved ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'}`}>
-                                        <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${job.isApproved ? 'bg-green-400' : 'bg-amber-400'}`}></span>
-                                        {job.isApproved ? 'Active' : 'Pending'}
-                                    </span>
-                                </div>
-                                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 mb-3">
-                                    <span className="flex items-center capitalize"><Briefcase className="w-4 h-4 mr-1.5 text-gray-500"/> {job.type}</span>
-                                    <span className="flex items-center"><MapPin className="w-4 h-4 mr-1.5 text-gray-500"/> {job.location}</span>
-                                </div>
-                                <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 font-medium">
-                                    <span className="flex items-center"><Calendar className="w-3.5 h-3.5 mr-1.5"/> Posted: {new Date(job.postedAt).toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}</span>
-                                    <span className="flex items-center text-orange-400/80"><Calendar className="w-3.5 h-3.5 mr-1.5"/> Deadline: {new Date(job.deadline).toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric'})}</span>
+                            <div className="mb-6 md:mb-0 flex items-start gap-4">
+                                {/* Company logo on each listing row */}
+                                <CompanyAvatar name={company?.name} logoUrl={logoUrl} size="md" />
+                                <div>
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <h3 className="text-2xl font-bold text-white group-hover:text-accentBlue transition-colors">{job.title}</h3>
+                                        <span className={`px-2.5 py-1 rounded-full text-xs font-semibold inline-flex items-center border ${job.isApproved ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'}`}>
+                                            <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${job.isApproved ? 'bg-green-400' : 'bg-amber-400'}`}></span>
+                                            {job.isApproved ? 'Active' : 'Pending'}
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 mb-3">
+                                        <span className="flex items-center capitalize"><Briefcase className="w-4 h-4 mr-1.5 text-gray-500"/> {job.type}</span>
+                                        <span className="flex items-center"><MapPin className="w-4 h-4 mr-1.5 text-gray-500"/> {job.location}</span>
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 font-medium">
+                                        <span className="flex items-center"><Calendar className="w-3.5 h-3.5 mr-1.5"/> Posted: {new Date(job.postedAt).toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}</span>
+                                        <span className="flex items-center text-orange-400/80"><Calendar className="w-3.5 h-3.5 mr-1.5"/> Deadline: {new Date(job.deadline).toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric'})}</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex flex-col sm:flex-row gap-3">
+                            <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
                                 <Link to={`/jobs/${job.id}`} className="btn-secondary flex items-center justify-center bg-gray-800/80 hover:bg-gray-700">
                                     <ExternalLink className="w-4 h-4 mr-2" /> View Public
                                 </Link>

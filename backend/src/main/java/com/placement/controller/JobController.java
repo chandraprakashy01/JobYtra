@@ -1,9 +1,11 @@
 package com.placement.controller;
 
-import com.placement.model.Application;
+import com.placement.controller.dto.JobWithCompanyDTO;
+import com.placement.model.Company;
 import com.placement.model.Job;
 import com.placement.model.Student;
 import com.placement.repository.ApplicationRepository;
+import com.placement.repository.CompanyRepository;
 import com.placement.repository.JobRepository;
 import com.placement.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -24,22 +27,53 @@ public class JobController {
     JobRepository jobRepository;
 
     @Autowired
+    CompanyRepository companyRepository;
+
+    @Autowired
     StudentRepository studentRepository;
 
+    private JobWithCompanyDTO toDTO(Job job) {
+        JobWithCompanyDTO dto = new JobWithCompanyDTO();
+        dto.setId(job.getId());
+        dto.setTitle(job.getTitle());
+        dto.setCompanyId(job.getCompanyId());
+        dto.setDescription(job.getDescription());
+        dto.setEligibility(job.getEligibility());
+        dto.setSalary(job.getSalary());
+        dto.setLocation(job.getLocation());
+        dto.setType(job.getType());
+        dto.setDeadline(job.getDeadline());
+        dto.setIsApproved(job.getIsApproved());
+        dto.setPostedAt(job.getPostedAt());
+
+        // Enrich with company info
+        if (job.getCompanyId() != null) {
+            Optional<Company> companyOpt = companyRepository.findById(job.getCompanyId());
+            companyOpt.ifPresent(company -> {
+                dto.setCompanyName(company.getName());
+                dto.setCompanyWebsite(company.getWebsite());
+                dto.setCompanyAbout(company.getAbout());
+            });
+        }
+        return dto;
+    }
+
     @GetMapping
-    public ResponseEntity<List<Job>> getAllApprovedJobs() {
-        return ResponseEntity.ok(jobRepository.findByIsApprovedTrue());
+    public ResponseEntity<List<JobWithCompanyDTO>> getAllApprovedJobs() {
+        List<JobWithCompanyDTO> dtos = jobRepository.findByIsApprovedTrue()
+                .stream().map(this::toDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Job> getJobById(@PathVariable String id) {
+    public ResponseEntity<JobWithCompanyDTO> getJobById(@PathVariable String id) {
         return jobRepository.findById(id)
-                .map(ResponseEntity::ok)
+                .map(job -> ResponseEntity.ok(toDTO(job)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/recommended")
-    public ResponseEntity<List<Job>> getRecommendedJobs(Authentication authentication) {
+    public ResponseEntity<List<JobWithCompanyDTO>> getRecommendedJobs(Authentication authentication) {
         String email = authentication.getName();
         Student student = studentRepository.findByEmail(email).orElse(null);
         if (student == null) {
@@ -47,8 +81,8 @@ public class JobController {
         }
 
         List<Job> allApproved = jobRepository.findByIsApprovedTrue();
-        
-        List<Job> recommended = allApproved.stream().filter(job -> {
+
+        List<JobWithCompanyDTO> recommended = allApproved.stream().filter(job -> {
             // Check eligibility first
             if (student.getCgpa() != null && job.getEligibility() != null && job.getEligibility().getMinCgpa() != null) {
                 if (student.getCgpa() < job.getEligibility().getMinCgpa()) return false;
@@ -66,7 +100,7 @@ public class JobController {
                         .count();
             }
             return matchCount > 0; // return if at least 1 skill matches
-        }).collect(Collectors.toList());
+        }).map(this::toDTO).collect(Collectors.toList());
 
         return ResponseEntity.ok(recommended);
     }
