@@ -50,6 +50,20 @@ export const AuthProvider = ({ children }) => {
         return await api.post('/auth/company/register', data);
     };
 
+    /** Used by OAuthCallback — stores JWT returned from backend OAuth2 exchange. */
+    const loginWithToken = (data) => {
+        if (data.token) {
+            localStorage.setItem('token', data.token);
+            const userData = {
+                id: data.id,
+                email: data.email,
+                role: data.role,
+            };
+            localStorage.setItem('user', JSON.stringify(userData));
+            setUser(userData);
+        }
+    };
+
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -57,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, registerStudent, registerCompany, logout }}>
+        <AuthContext.Provider value={{ user, loading, login, loginWithToken, registerStudent, registerCompany, logout }}>
             {children}
         </AuthContext.Provider>
     );

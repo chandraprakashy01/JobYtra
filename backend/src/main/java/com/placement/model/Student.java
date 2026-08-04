@@ -33,4 +33,7 @@ public class Student {
 
     // Role will just be useful for security mapping
     private String role = "ROLE_STUDENT";
+
+    // OAuth2 provider ("google", "github", or null for email/password users)
+    private String oauthProvider;
 }
