@@ -40,8 +40,8 @@ services:
 
       # Database (Neon Postgres)
       - key: DB_URL
-        sync: false
+        value: jdbc:postgresql://ep-snowy-wind-az7wv1dl.c-3.ap-southeast-1.aws.neon.tech:5432/neondb?sslmode=require
       - key: DB_USERNAME
-        sync: false
+        value: neondb_owner
       - key: DB_PASSWORD
-        sync: false
+        value: npg_eQh26GCcvEwy
