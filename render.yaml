@@ -24,6 +24,10 @@ services:
       - key: JAVA_VERSION
         value: 21
 
+      # Activate production Spring profile
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+
       # MongoDB Atlas URI — set real value in Render Dashboard → Environment
       - key: MONGO_URI
         sync: false

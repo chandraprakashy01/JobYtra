@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class GeminiService {
 
-    @Value("${GEMINI_API_KEY:}")
+    @Value("${app.geminiApiKey:}")
     private String geminiApiKey;
 
     private final HttpClient httpClient = HttpClient.newBuilder()

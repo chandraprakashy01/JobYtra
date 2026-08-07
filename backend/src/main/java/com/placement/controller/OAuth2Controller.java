@@ -43,16 +43,16 @@ public class OAuth2Controller {
     @Autowired
     JwtUtils jwtUtils;
 
-    @Value("${GOOGLE_CLIENT_ID:}")
+    @Value("${app.googleClientId:}")
     private String googleClientId;
 
-    @Value("${GOOGLE_CLIENT_SECRET:}")
+    @Value("${app.googleClientSecret:}")
     private String googleClientSecret;
 
-    @Value("${GITHUB_CLIENT_ID:}")
+    @Value("${app.githubClientId:}")
     private String githubClientId;
 
-    @Value("${GITHUB_CLIENT_SECRET:}")
+    @Value("${app.githubClientSecret:}")
     private String githubClientSecret;
 
     private final HttpClient httpClient = HttpClient.newBuilder()
