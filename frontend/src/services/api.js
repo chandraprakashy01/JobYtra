@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // Use VITE_API_URL env variable (set in .env.local for dev, Vercel env for prod)
-// Falls back to the Render backend so phone / external devices always work
-const API_URL = import.meta.env.VITE_API_URL || 'https://jobytra-job-fare-backend.onrender.com/api';
+// If not set, it defaults to the live Render backend
+const API_URL = import.meta.env.VITE_API_URL || 'https://jobytra.onrender.com/api';
 
 const api = axios.create({
     baseURL: API_URL,

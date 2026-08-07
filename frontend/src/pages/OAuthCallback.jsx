@@ -59,7 +59,7 @@ const OAuthCallback = () => {
         setStatus(`Signing you in with ${provider.charAt(0).toUpperCase() + provider.slice(1)}...`);
 
         // Exchange code for JWT via backend
-        fetch(`http://localhost:8080/api/auth/oauth2/${provider}`, {
+        fetch(`https://jobytra.onrender.com/api/auth/oauth2/${provider}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ code, redirectUri: config.redirectUri }),

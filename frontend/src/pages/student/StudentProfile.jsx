@@ -129,7 +129,7 @@ const StudentProfile = () => {
                                 <p className="text-xs text-gray-500">Available for recruiters</p>
                             </div>
                         </div>
-                        <a href={`http://localhost:8080${profile.resumeUrl}`} target="_blank" rel="noreferrer" className="btn-secondary !py-2 !px-4 text-sm font-medium">
+                        <a href={`https://jobytra.onrender.com${profile.resumeUrl}`} target="_blank" rel="noreferrer" className="btn-secondary !py-2 !px-4 text-sm font-medium">
                             View PDF
                         </a>
                     </div>
