@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/public")
 public class PublicController {
-    
+
     @Autowired
     StudentRepository studentRepository;
 
