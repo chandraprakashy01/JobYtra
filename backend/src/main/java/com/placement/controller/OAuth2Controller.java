@@ -32,7 +32,7 @@ import java.util.Optional;
  *
  * OAuth2 students are auto-approved (they've proved identity via provider).
  */
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "https://jobytra.vercel.app", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth/oauth2")
 public class OAuth2Controller {

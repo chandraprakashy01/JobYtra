@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * All endpoints are under /api/student/ai/ and require ROLE_STUDENT (enforced by WebSecurityConfig).
  */
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "https://jobytra.vercel.app", maxAge = 3600)
 @RestController
 @RequestMapping("/api/student/ai")
 public class AIResumeController {

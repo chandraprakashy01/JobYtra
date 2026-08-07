@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "https://jobytra-job-fare.vercel.app/", maxAge = 3600)
+@CrossOrigin(origins = "https://jobytra.vercel.app", maxAge = 3600)
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {

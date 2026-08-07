@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "https://jobytra.vercel.app", maxAge = 3600)
 @RestController
 @RequestMapping("/api/student")
 public class StudentController {

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "https://jobytra.vercel.app", maxAge = 3600)
 @RestController
 @RequestMapping("/api/jobs")
 public class JobController {
