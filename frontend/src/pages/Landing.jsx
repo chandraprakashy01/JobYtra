@@ -10,7 +10,35 @@ const Landing = () => {
   useEffect(() => {
     api.get('/public/top-students')
       .then(res => {
-        setTopStudents(res.data);
+        const aiStudent = {
+          name: "Alexandria",
+          branch: "Artificial Intelligence",
+          cgpa: 10.0,
+          skills: ["Agentic Coding", "React", "Spring Boot", "UI/UX"],
+          profilePic: "/ai_student.png"
+        };
+
+        // Attach realistic profile pictures to the backend seeded students
+        const mappedBackendStudents = res.data.map(student => {
+          if (student.name === 'Aarav Sharma') return { ...student, profilePic: '/aarav_sharma.png' };
+          if (student.name === 'Priya Patel') return { ...student, profilePic: '/student_2.png' };
+          if (student.name === 'Rahul Verma') return { ...student, profilePic: '/student_3.png' };
+          return student;
+        });
+
+        // Add one more mock student to round out the grid if needed
+        const extraMocks = [
+          {
+            name: "Ananya Desai",
+            branch: "Electronics & Comm",
+            cgpa: 9.2,
+            skills: ["C++", "Embedded Systems", "IoT", "Linux"],
+            profilePic: "/student_4.png"
+          }
+        ];
+
+        // Combine AI student, mapped backend students, and extra mocks, keeping max 6
+        setTopStudents([aiStudent, ...mappedBackendStudents, ...extraMocks].slice(0, 6));
         setIsLoading(false);
       })
       .catch(err => {
@@ -41,10 +69,10 @@ const Landing = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 px-4">
             <Link to="/jobs" className="btn-primary w-full sm:w-auto py-4 px-8 text-lg font-bold flex items-center justify-center gap-2 group">
-              <Search className="w-5 h-5 transition-transform group-hover:scale-110"/> Browse Jobs
+              <Search className="w-5 h-5 transition-transform group-hover:scale-110" /> Browse Jobs
             </Link>
             <Link to="/register" className="btn-secondary w-full sm:w-auto py-4 px-8 text-lg font-bold flex items-center justify-center gap-2 group bg-lightNavy/50 backdrop-blur-sm">
-              Join Now <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1"/>
+              Join Now <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
@@ -91,18 +119,32 @@ const Landing = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { name: 'Google', desc: 'Search, Cloud & AI Solutions', logoColor: 'from-blue-500 via-red-500 to-yellow-500' },
-              { name: 'Microsoft', desc: 'Cloud & Productivity Software', logoColor: 'from-blue-600 to-cyan-500' },
-              { name: 'Amazon', desc: 'E-Commerce & AWS Cloud Services', logoColor: 'from-amber-500 to-orange-600' },
-              { name: 'Meta', desc: 'Social Technologies & Metaverse', logoColor: 'from-blue-500 to-indigo-600' },
-              { name: 'Netflix', desc: 'Global Entertainment & Streaming', logoColor: 'from-red-600 to-red-800' },
-              { name: 'Adobe', desc: 'Creative Cloud & Document Solutions', logoColor: 'from-red-500 to-rose-600' },
-              { name: 'Razorpay', desc: 'Fintech & Payment Gateway Systems', logoColor: 'from-blue-400 to-indigo-500' },
-              { name: 'Zomato', desc: 'Food Delivery & Restaurant Discovery', logoColor: 'from-red-500 to-red-600' }
+              { name: 'Google', domain: 'google.com', desc: 'Search, Cloud & AI Solutions', logoColor: 'from-blue-500 via-red-500 to-yellow-500' },
+              { name: 'Microsoft', domain: 'microsoft.com', desc: 'Cloud & Productivity Software', logoColor: 'from-blue-600 to-cyan-500' },
+              { name: 'Amazon', domain: 'amazon.com', desc: 'E-Commerce & AWS Cloud Services', logoColor: 'from-amber-500 to-orange-600' },
+              { name: 'Meta', domain: 'meta.com', desc: 'Social Technologies & Metaverse', logoColor: 'from-blue-500 to-indigo-600' },
+              { name: 'Netflix', domain: 'netflix.com', desc: 'Global Entertainment & Streaming', logoColor: 'from-red-600 to-red-800' },
+              { name: 'Adobe', domain: 'adobe.com', desc: 'Creative Cloud & Document Solutions', logoColor: 'from-red-500 to-rose-600' },
+              { name: 'Razorpay', domain: 'razorpay.com', desc: 'Fintech & Payment Gateway Systems', logoColor: 'from-blue-400 to-indigo-500' },
+              { name: 'Zomato', domain: 'zomato.com', desc: 'Food Delivery & Restaurant Discovery', logoColor: 'from-red-500 to-red-600' }
             ].map((client, idx) => (
               <div key={idx} className="card p-6 flex flex-col items-center justify-center text-center border-gray-800 bg-[#161d36]/30 hover:border-accentBlue/30 hover:-translate-y-1 transition-all duration-300">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${client.logoColor} flex items-center justify-center text-white font-black text-xl mb-4 shadow-lg shadow-white/5`}>
-                  {client.name.charAt(0)}
+                <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center mb-4 shadow-lg shadow-white/5 p-2 overflow-hidden relative group-hover:scale-110 transition-transform duration-300">
+                  <img 
+                    src={`https://www.google.com/s2/favicons?domain=${client.domain}&sz=128`} 
+                    alt={`${client.name} logo`}
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      if (e.target.nextElementSibling) {
+                        e.target.nextElementSibling.classList.remove('hidden');
+                        e.target.nextElementSibling.classList.add('flex');
+                      }
+                    }}
+                  />
+                  <div className={`absolute inset-0 w-full h-full bg-gradient-to-tr ${client.logoColor} items-center justify-center text-white font-black text-2xl hidden`}>
+                    {client.name.charAt(0)}
+                  </div>
                 </div>
                 <h4 className="text-lg font-bold text-white mb-1">{client.name}</h4>
                 <p className="text-gray-500 text-xs">{client.desc}</p>
@@ -121,7 +163,7 @@ const Landing = () => {
             </h2>
             <p className="text-gray-400 text-lg">Meet our academically brightest engineering minds</p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {isLoading ? (
               // Loading Skeletons
@@ -141,9 +183,13 @@ const Landing = () => {
             ) : topStudents.length > 0 ? (
               topStudents.map((student, idx) => (
                 <div key={idx} className={`card flex flex-col items-center p-8 group border-gray-800/50 bg-gradient-to-b from-lightNavy/50 to-transparent hover:border-accentBlue/40 animate-slideUp animate-stagger-${(idx % 3) + 1}`}>
-                  <div className="w-24 h-24 bg-gradient-to-tr from-accentBlue to-cyan-400 rounded-full flex items-center justify-center text-4xl font-bold mb-5 shadow-lg shadow-accentBlue/20 group-hover:scale-110 transition-transform duration-300">
-                    {student.name.charAt(0)}
-                  </div>
+                  {student.profilePic ? (
+                    <img src={student.profilePic} alt={student.name} className="w-24 h-24 rounded-full object-cover mb-5 shadow-lg shadow-accentBlue/20 group-hover:scale-110 transition-transform duration-300 border-2 border-accentBlue/50" />
+                  ) : (
+                    <div className="w-24 h-24 bg-gradient-to-tr from-accentBlue to-cyan-400 rounded-full flex items-center justify-center text-4xl font-bold mb-5 shadow-lg shadow-accentBlue/20 group-hover:scale-110 transition-transform duration-300">
+                      {student.name.charAt(0)}
+                    </div>
+                  )}
                   <h3 className="text-xl font-bold mb-1 text-white">{student.name}</h3>
                   <p className="text-accentBlue mb-4 font-medium">{student.branch}</p>
                   <div className="bg-darkNavy border border-gray-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 flex items-center gap-2">
