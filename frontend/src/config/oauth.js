@@ -15,7 +15,7 @@ const REDIRECT_URI = `${window.location.origin}/oauth2/callback`;
 export const OAUTH_CONFIG = {
     google: {
         clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
-        authUrl: 'https://accounts.google.com/login/auth/oauth2/auth',
+        authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
         scope: 'openid email profile',
         redirectUri: REDIRECT_URI,
     },
