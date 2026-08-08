@@ -18,12 +18,22 @@ const CompanyDashboard = () => {
                 setCompany(profileRes.data);
                 setJobs(jobsRes.data);
                 setIsLoading(false);
-            })
+        })
             .catch(err => {
                 console.log(err);
                 setIsLoading(false);
             });
     }, []);
+
+    const handleDelete = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this job posting?')) return;
+        try {
+            await api.delete(`/company/jobs/${id}`);
+            setJobs(jobs.filter(j => j.id !== id));
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to delete job');
+        }
+    };
 
     const activeJobs = jobs.filter(j => j.isApproved).length;
     const pendingJobs = jobs.filter(j => !j.isApproved).length;
@@ -140,6 +150,9 @@ const CompanyDashboard = () => {
                                 <Link to={`/company/job/${job.id}/applicants`} className="btn-primary flex items-center justify-center shadow-lg shadow-accentBlue/20">
                                     <Users className="w-4 h-4 mr-2" /> View Applicants
                                 </Link>
+                                <button onClick={() => handleDelete(job.id)} className="btn-secondary flex items-center justify-center !border-red-500/50 text-red-400 hover:bg-red-500/10">
+                                    Delete
+                                </button>
                             </div>
                         </div>
                     ))

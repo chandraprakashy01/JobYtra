@@ -27,6 +27,16 @@ const AdminCompanies = () => {
         }
     };
 
+    const handleDelete = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this company?')) return;
+        try {
+            await api.delete(`/admin/companies/${id}`);
+            setCompanies(companies.filter(c => c.id !== id));
+        } catch (error) {
+            alert('Failed to delete company');
+        }
+    };
+
     return (
         <div className="animate-fadeIn">
             <h1 className="text-3xl font-heading font-bold mb-8">Manage Companies</h1>
@@ -75,13 +85,18 @@ const AdminCompanies = () => {
                                         }
                                     </td>
                                     <td className="p-4 text-right">
-                                        {!company.isVerified ? (
-                                            <button onClick={() => handleVerify(company.id)} className="btn-primary ml-auto !py-1.5 !px-4 text-sm hover:shadow-green-500/20 hover:bg-green-600 hover:border-green-600">
-                                                Verify
+                                        <div className="flex items-center justify-end gap-3">
+                                            {!company.isVerified ? (
+                                                <button onClick={() => handleVerify(company.id)} className="btn-primary !py-1.5 !px-4 text-sm hover:shadow-green-500/20 hover:bg-green-600 hover:border-green-600">
+                                                    Verify
+                                                </button>
+                                            ) : (
+                                                <span className="text-gray-500 text-sm italic mr-2">Verified</span>
+                                            )}
+                                            <button onClick={() => handleDelete(company.id)} className="btn-secondary !py-1.5 !px-4 text-sm !border-red-500/50 text-red-400 hover:bg-red-500/10">
+                                                Delete
                                             </button>
-                                        ) : (
-                                            <span className="text-gray-500 text-sm italic mr-2">Verified</span>
-                                        )}
+                                        </div>
                                     </td>
                                 </tr>
                             ))

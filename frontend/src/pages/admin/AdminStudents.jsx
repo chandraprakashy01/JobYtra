@@ -27,6 +27,16 @@ const AdminStudents = () => {
         }
     };
 
+    const handleDelete = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this student?')) return;
+        try {
+            await api.delete(`/admin/students/${id}`);
+            setStudents(students.filter(s => s.id !== id));
+        } catch (error) {
+            alert('Failed to delete student');
+        }
+    };
+
     return (
         <div className="animate-fadeIn">
             <h1 className="text-3xl font-heading font-bold mb-8">Manage Students</h1>
@@ -69,13 +79,18 @@ const AdminStudents = () => {
                                         }
                                     </td>
                                     <td className="p-4 text-right">
-                                        {!student.isApproved ? (
-                                            <button onClick={() => handleApprove(student.id)} className="btn-primary ml-auto !py-1.5 !px-4 text-sm hover:shadow-green-500/20 hover:bg-green-600 hover:border-green-600">
-                                                Approve
+                                        <div className="flex items-center justify-end gap-3">
+                                            {!student.isApproved ? (
+                                                <button onClick={() => handleApprove(student.id)} className="btn-primary !py-1.5 !px-4 text-sm hover:shadow-green-500/20 hover:bg-green-600 hover:border-green-600">
+                                                    Approve
+                                                </button>
+                                            ) : (
+                                                <span className="text-gray-500 text-sm italic mr-2">Resolved</span>
+                                            )}
+                                            <button onClick={() => handleDelete(student.id)} className="btn-secondary !py-1.5 !px-4 text-sm !border-red-500/50 text-red-400 hover:bg-red-500/10">
+                                                Delete
                                             </button>
-                                        ) : (
-                                            <span className="text-gray-500 text-sm italic mr-2">Resolved</span>
-                                        )}
+                                        </div>
                                     </td>
                                 </tr>
                             ))

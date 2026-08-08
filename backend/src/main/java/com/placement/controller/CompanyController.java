@@ -78,6 +78,23 @@ public class CompanyController {
         return ResponseEntity.ok(new MessageResponse("Job created successfully and is now visible on the jobs page."));
     }
 
+    @DeleteMapping("/jobs/{jobId}")
+    public ResponseEntity<?> deleteMyJob(@PathVariable String jobId, Authentication authentication) {
+        String email = authentication.getName();
+        Company company = companyRepository.findByEmail(email).orElseThrow();
+
+        Job job = jobRepository.findById(jobId).orElseThrow();
+        if (!job.getCompanyId().equals(company.getId())) {
+            return ResponseEntity.status(403).body(new MessageResponse("You can only delete your own jobs."));
+        }
+
+        List<Application> apps = applicationRepository.findByJobId(jobId);
+        applicationRepository.deleteAll(apps);
+        
+        jobRepository.deleteById(jobId);
+        return ResponseEntity.ok(new MessageResponse("Job deleted successfully."));
+    }
+
     @GetMapping("/applications/job/{jobId}")
     public ResponseEntity<List<Application>> getJobApplicants(@PathVariable String jobId, Authentication authentication) {
         String email = authentication.getName();

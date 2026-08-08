@@ -59,6 +59,11 @@ public class AdminController {
         return ResponseEntity.ok(new MessageResponse("Company verified"));
     }
 
+    @GetMapping("/jobs")
+    public ResponseEntity<List<Job>> getAllJobs() {
+        return ResponseEntity.ok(jobRepository.findAll());
+    }
+
     @GetMapping("/jobs/pending")
     public ResponseEntity<List<Job>> getPendingJobs() {
         return ResponseEntity.ok(jobRepository.findByIsApprovedFalse());
@@ -90,5 +95,33 @@ public class AdminController {
         stats.put("placementRate", totalStudents > 0 ? ((double) placedStudents / totalStudents) * 100 : 0);
 
         return ResponseEntity.ok(stats);
+    }
+
+    @DeleteMapping("/students/{id}")
+    public ResponseEntity<?> deleteStudent(@PathVariable String id) {
+        List<Application> apps = applicationRepository.findByStudentId(id);
+        applicationRepository.deleteAll(apps);
+        studentRepository.deleteById(id);
+        return ResponseEntity.ok(new MessageResponse("Student deleted successfully"));
+    }
+
+    @DeleteMapping("/companies/{id}")
+    public ResponseEntity<?> deleteCompany(@PathVariable String id) {
+        List<Job> jobs = jobRepository.findByCompanyId(id);
+        for(Job j : jobs) {
+            List<Application> apps = applicationRepository.findByJobId(j.getId());
+            applicationRepository.deleteAll(apps);
+        }
+        jobRepository.deleteAll(jobs);
+        companyRepository.deleteById(id);
+        return ResponseEntity.ok(new MessageResponse("Company deleted successfully"));
+    }
+
+    @DeleteMapping("/jobs/{id}")
+    public ResponseEntity<?> deleteJob(@PathVariable String id) {
+        List<Application> apps = applicationRepository.findByJobId(id);
+        applicationRepository.deleteAll(apps);
+        jobRepository.deleteById(id);
+        return ResponseEntity.ok(new MessageResponse("Job deleted successfully"));
     }
 }

@@ -8,7 +8,7 @@ const AdminJobs = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        api.get('/admin/jobs/pending')
+        api.get('/admin/jobs')
             .then(res => {
                 setJobs(res.data);
                 setIsLoading(false);
@@ -22,15 +22,25 @@ const AdminJobs = () => {
     const handleApprove = async (id) => {
         try {
             await api.put(`/admin/jobs/${id}/approve`);
-            setJobs(jobs.filter(j => j.id !== id));
+            setJobs(jobs.map(j => j.id === id ? { ...j, isApproved: true } : j));
         } catch (error) {
             alert('Failed to approve');
         }
     };
 
+    const handleDelete = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this job?')) return;
+        try {
+            await api.delete(`/admin/jobs/${id}`);
+            setJobs(jobs.filter(j => j.id !== id));
+        } catch (error) {
+            alert('Failed to delete job');
+        }
+    };
+
     return (
         <div className="animate-fadeIn">
-            <h1 className="text-3xl font-heading font-bold mb-8">Pending Jobs</h1>
+            <h1 className="text-3xl font-heading font-bold mb-8">Manage Jobs</h1>
             
             <div className="table-container">
                 <table className="w-full text-left border-collapse min-w-max">
@@ -67,9 +77,18 @@ const AdminJobs = () => {
                                         {job.location}
                                     </td>
                                     <td className="p-4 text-right">
-                                        <button onClick={() => handleApprove(job.id)} className="btn-primary flex items-center ml-auto !py-1.5 !px-3 text-sm hover:shadow-green-500/20 hover:bg-green-600 hover:border-green-600">
-                                            <CheckCircle className="w-4 h-4 mr-1.5"/> Approve
-                                        </button>
+                                        <div className="flex items-center justify-end gap-3">
+                                            {!job.isApproved ? (
+                                                <button onClick={() => handleApprove(job.id)} className="btn-primary flex items-center !py-1.5 !px-3 text-sm hover:shadow-green-500/20 hover:bg-green-600 hover:border-green-600">
+                                                    <CheckCircle className="w-4 h-4 mr-1.5"/> Approve
+                                                </button>
+                                            ) : (
+                                                <span className="text-gray-500 text-sm italic mr-2">Approved</span>
+                                            )}
+                                            <button onClick={() => handleDelete(job.id)} className="btn-secondary !py-1.5 !px-4 text-sm !border-red-500/50 text-red-400 hover:bg-red-500/10">
+                                                Delete
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))
@@ -77,8 +96,8 @@ const AdminJobs = () => {
                             <tr>
                                 <td colSpan="4" className="p-12 text-center text-gray-500">
                                     <Briefcase className="w-12 h-12 text-gray-600 mx-auto mb-4 opacity-50" />
-                                    <p className="text-lg font-medium text-gray-400">No pending jobs to approve</p>
-                                    <p className="text-sm mt-1">All job postings are currently up to date.</p>
+                                    <p className="text-lg font-medium text-gray-400">No jobs found</p>
+                                    <p className="text-sm mt-1">There are currently no job postings.</p>
                                 </td>
                             </tr>
                         )}
