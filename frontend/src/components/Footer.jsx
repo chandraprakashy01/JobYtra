@@ -115,13 +115,8 @@ const Footer = () => {
 
           {/* Column 1 – Brand */}
           <div className="lg:col-span-1 sm:col-span-2">
-            <Link to="/" className="inline-flex items-center gap-2.5 group mb-4">
-              <div className="p-2 rounded-lg bg-accentBlue/10 border border-accentBlue/20 group-hover:bg-accentBlue/20 transition-colors duration-300">
-                <Briefcase className="w-5 h-5 text-accentBlue" />
-              </div>
-              <span className="text-lg font-heading font-bold text-slate-900 tracking-wide logo">
-                JobYtra
-              </span>
+            <Link to="/" className="inline-flex items-center group mb-4">
+              <img src="/logo.jpeg" alt="JobYtra Logo" className="h-16 sm:h-24 w-auto transition-transform duration-300 group-hover:scale-105" />
             </Link>
             <p className="text-gray-600 text-sm leading-relaxed mt-3 max-w-xs">
               Connecting JobYtra students with top recruiters. Discover opportunities, launch careers, and build your future — all in one platform.
