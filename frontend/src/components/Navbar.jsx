@@ -17,11 +17,11 @@ const Navbar = () => {
   return (
     <nav className="bg-darkNavy/90 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20 sm:h-24">
+        <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center group" aria-label="JobYtra Home">
-              <img src="/logo.jpeg" alt="JobYtra Logo" className="h-14 sm:h-20 w-auto transition-transform duration-300 group-hover:scale-105 bg-white p-1 rounded-md" />
+              <img src="/logo.jpeg" alt="JobYtra Logo" className="h-8 sm:h-10 w-auto transition-transform duration-300 group-hover:scale-105 rounded-md" />
             </Link>
           </div>
 
