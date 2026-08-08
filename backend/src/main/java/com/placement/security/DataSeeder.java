@@ -148,7 +148,45 @@ public class DataSeeder implements CommandLineRunner {
             System.out.println("Dummy Jobs seeded: Software Engineer Intern, Machine Learning Associate");
         }
 
-        // 5. Seed 10 Additional Dummy Companies & Jobs/Internships
+        // 5. Seed Bazarsetu Company & Job
+        Company bazarsetu = companyRepository.findByEmail("hr@bazarsetu.in").orElse(null);
+        if (bazarsetu == null) {
+            bazarsetu = new Company();
+            bazarsetu.setName("Bazarsetu");
+            bazarsetu.setEmail("hr@bazarsetu.in");
+            bazarsetu.setPassword(passwordEncoder.encode("Company@123"));
+            bazarsetu.setWebsite("https://bazarsetu.in");
+            bazarsetu.setAbout("Bazarsetu is a fast-growing platform leveraging AI for modern commerce.");
+            bazarsetu.setIsVerified(true);
+            companyRepository.save(bazarsetu);
+            System.out.println("Seeded Company: Bazarsetu");
+        }
+
+        if (jobRepository.findByCompanyId(bazarsetu.getId()).isEmpty()) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MONTH, 1);
+            Date deadline = cal.getTime();
+
+            Job aiJob = new Job();
+            aiJob.setTitle("AI Engineer");
+            aiJob.setCompanyId(bazarsetu.getId());
+            aiJob.setDescription("Join Bazarsetu as an AI Engineer. You will work on cutting-edge machine learning models, NLP, and computer vision to enhance our commerce platform.");
+            aiJob.setSalary("18 LPA");
+            aiJob.setLocation("Bangalore (Hybrid)");
+            aiJob.setType("full-time");
+            aiJob.setDeadline(deadline);
+            aiJob.setIsApproved(true);
+
+            Eligibility el = new Eligibility();
+            el.setMinCgpa(7.5f);
+            el.setBranches(List.of("CSE", "IT", "AI"));
+            aiJob.setEligibility(el);
+            
+            jobRepository.save(aiJob);
+            System.out.println("Seeded Job for Company: Bazarsetu");
+        }
+
+        // 6. Seed Additional Dummy Companies & Jobs/Internships
         String[][] companiesData = {
             {"Microsoft", "microsoft@gmail.com", "Redmond-based tech giant focusing on cloud, AI, and OS.", "https://microsoft.com"},
             {"TCS", "tcs@gmail.com", "Tata Consultancy Services is a global leader in IT services, consulting & business solutions.", "https://tcs.com"},

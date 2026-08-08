@@ -8,8 +8,12 @@ const getCompanyLogoUrl = (website, companyName) => {
     if (website) {
         try {
             const domain = new URL(website.startsWith('http') ? website : `https://${website}`).hostname;
-            return `https://logo.clearbit.com/${domain}`;
+            return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
         } catch (_) {}
+    }
+    if (companyName) {
+        const domain = companyName.toLowerCase().replace(/\s+/g, '') + '.com';
+        return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
     }
     return null;
 };
@@ -17,6 +21,11 @@ const getCompanyLogoUrl = (website, companyName) => {
 // Fallback avatar with initials
 const CompanyAvatar = ({ name, logoUrl, size = 'md' }) => {
     const [imgError, setImgError] = React.useState(false);
+    
+    React.useEffect(() => {
+        setImgError(false);
+    }, [logoUrl]);
+
     const initials = name
         ? name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase()
         : '??';
@@ -42,7 +51,7 @@ const CompanyAvatar = ({ name, logoUrl, size = 'md' }) => {
                 src={logoUrl}
                 alt={name}
                 onError={() => setImgError(true)}
-                className={`${sizeClasses[size]} rounded-xl object-contain bg-white p-1 border border-gray-700/50 shadow-sm flex-shrink-0`}
+                className={`${sizeClasses[size]} rounded-xl object-contain shadow-sm flex-shrink-0`}
             />
         );
     }
@@ -129,33 +138,33 @@ const Jobs = () => {
                     filteredJobs.map((job, idx) => {
                         const logoUrl = getCompanyLogoUrl(job.companyWebsite, job.companyName);
                         return (
-                            <div key={job.id} className={`card flex flex-col relative overflow-hidden group border-gray-800/60 bg-gradient-to-b from-lightNavy to-[#0f1629] animate-slideUp animate-stagger-${(idx % 3) + 1}`}>
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-accentBlue/5 rounded-bl-full -z-10 group-hover:scale-125 group-hover:bg-accentBlue/10 transition-all duration-500"></div>
+                            <div key={job.id} className={`card flex flex-col relative overflow-hidden group bg-white shadow-md animate-slideUp animate-stagger-${(idx % 3) + 1}`}>
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-accentBlue/10 rounded-bl-full -z-10 group-hover:scale-125 transition-all duration-500"></div>
                                 
                                 {/* Company header */}
                                 <div className="flex items-center gap-3 mb-4">
                                     <CompanyAvatar name={job.companyName} logoUrl={logoUrl} size="md" />
                                     <div className="min-w-0">
-                                        <p className="text-xs text-gray-500 uppercase tracking-wider mb-0.5">Company</p>
-                                        <p className="text-sm font-semibold text-gray-300 truncate">{job.companyName || 'Company'}</p>
+                                        <p className="text-xs text-black uppercase tracking-wider mb-0.5 font-semibold">Company</p>
+                                        <p className="text-sm font-bold text-black break-words">{job.companyName || 'Company'}</p>
                                     </div>
                                 </div>
 
-                                <h3 className="text-2xl font-bold mb-2 text-white group-hover:text-accentBlue transition-colors">{job.title}</h3>
+                                <h3 className="text-2xl font-black mb-2 text-black group-hover:text-accentBlue transition-colors">{job.title}</h3>
                                 
-                                <div className="flex flex-wrap items-center text-accentBlue mb-5 font-medium text-sm capitalize gap-x-4 gap-y-2">
-                                    <span className="flex items-center"><Briefcase className="w-4 h-4 mr-1.5"/> {job.type}</span>
-                                    <span className="flex items-center"><MapPin className="w-4 h-4 mr-1.5"/> {job.location}</span>
+                                <div className="flex flex-wrap items-center text-black mb-5 font-bold text-sm capitalize gap-x-4 gap-y-2">
+                                    <span className="flex items-center"><Briefcase className="w-4 h-4 mr-1.5 text-black"/> {job.type}</span>
+                                    <span className="flex items-center"><MapPin className="w-4 h-4 mr-1.5 text-black"/> {job.location}</span>
                                 </div>
                                 
-                                <p className="text-gray-400 text-sm mb-8 flex-grow line-clamp-3 leading-relaxed">{job.description}</p>
+                                <p className="text-black font-medium text-sm mb-8 flex-grow leading-relaxed break-words">{job.description}</p>
                                 
-                                <div className="flex justify-between items-center mt-auto border-t border-gray-800/80 pt-5">
+                                <div className="flex justify-between items-center mt-auto border-t border-gray-200 pt-5">
                                     <div>
-                                        <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Salary</p>
-                                        <p className="font-semibold text-gray-200 flex items-center"><IndianRupee className="w-4 h-4 mr-1 text-gray-400"/> {job.salary}</p>
+                                        <p className="text-xs text-black font-semibold uppercase tracking-wider mb-1">Salary</p>
+                                        <p className="font-bold text-black flex items-center"><IndianRupee className="w-4 h-4 mr-1 text-black"/> {job.salary}</p>
                                     </div>
-                                    <Link to={`/jobs/${job.id}`} className="btn-secondary text-sm px-5 group-hover:border-accentBlue/50 group-hover:bg-gray-800 transition-colors">
+                                    <Link to={`/jobs/${job.id}`} className="px-5 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 transition-colors shadow-sm">
                                         View Details
                                     </Link>
                                 </div>

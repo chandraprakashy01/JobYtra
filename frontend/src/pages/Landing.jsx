@@ -126,7 +126,8 @@ const Landing = () => {
               { name: 'Netflix', domain: 'netflix.com', desc: 'Global Entertainment & Streaming', logoColor: 'from-red-600 to-red-800' },
               { name: 'Adobe', domain: 'adobe.com', desc: 'Creative Cloud & Document Solutions', logoColor: 'from-red-500 to-rose-600' },
               { name: 'Razorpay', domain: 'razorpay.com', desc: 'Fintech & Payment Gateway Systems', logoColor: 'from-blue-400 to-indigo-500' },
-              { name: 'Zomato', domain: 'zomato.com', desc: 'Food Delivery & Restaurant Discovery', logoColor: 'from-red-500 to-red-600' }
+              { name: 'Zomato', domain: 'zomato.com', desc: 'Food Delivery & Restaurant Discovery', logoColor: 'from-red-500 to-red-600' },
+              { name: 'Bazarsetu', domain: 'bazarsetu.in', desc: 'AI-driven Modern Commerce', logoColor: 'from-purple-500 to-indigo-600' }
             ].map((client, idx) => (
               <div key={idx} className="card p-6 flex flex-col items-center justify-center text-center border-gray-800 bg-[#161d36]/30 hover:border-accentBlue/30 hover:-translate-y-1 transition-all duration-300">
                 <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center mb-4 shadow-lg shadow-white/5 p-2 overflow-hidden relative group-hover:scale-110 transition-transform duration-300">

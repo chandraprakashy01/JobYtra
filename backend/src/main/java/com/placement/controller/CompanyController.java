@@ -72,10 +72,10 @@ public class CompanyController {
         }
 
         job.setCompanyId(company.getId());
-        job.setIsApproved(false); // require admin approval
+        job.setIsApproved(true); // auto-approve jobs as per request
         
         jobRepository.save(job);
-        return ResponseEntity.ok(new MessageResponse("Job created successfully, pending admin approval."));
+        return ResponseEntity.ok(new MessageResponse("Job created successfully and is now visible on the jobs page."));
     }
 
     @GetMapping("/applications/job/{jobId}")
