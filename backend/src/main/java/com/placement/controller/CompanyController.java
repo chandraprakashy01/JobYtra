@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -78,6 +79,7 @@ public class CompanyController {
         return ResponseEntity.ok(new MessageResponse("Job created successfully and is now visible on the jobs page."));
     }
 
+    @Transactional
     @DeleteMapping("/jobs/{jobId}")
     public ResponseEntity<?> deleteMyJob(@PathVariable String jobId, Authentication authentication) {
         String email = authentication.getName();

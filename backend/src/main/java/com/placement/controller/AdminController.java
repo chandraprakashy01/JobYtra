@@ -4,6 +4,7 @@ import com.placement.controller.dto.MessageResponse;
 import com.placement.model.Company;
 import com.placement.model.Job;
 import com.placement.model.Student;
+import com.placement.model.Application;
 import com.placement.repository.ApplicationRepository;
 import com.placement.repository.CompanyRepository;
 import com.placement.repository.JobRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.transaction.annotation.Transactional;
 
 @CrossOrigin(origins = "https://jobytra.vercel.app", maxAge = 3600)
 @RestController
@@ -97,6 +99,7 @@ public class AdminController {
         return ResponseEntity.ok(stats);
     }
 
+    @Transactional
     @DeleteMapping("/students/{id}")
     public ResponseEntity<?> deleteStudent(@PathVariable String id) {
         List<Application> apps = applicationRepository.findByStudentId(id);
@@ -105,6 +108,7 @@ public class AdminController {
         return ResponseEntity.ok(new MessageResponse("Student deleted successfully"));
     }
 
+    @Transactional
     @DeleteMapping("/companies/{id}")
     public ResponseEntity<?> deleteCompany(@PathVariable String id) {
         List<Job> jobs = jobRepository.findByCompanyId(id);
@@ -117,6 +121,7 @@ public class AdminController {
         return ResponseEntity.ok(new MessageResponse("Company deleted successfully"));
     }
 
+    @Transactional
     @DeleteMapping("/jobs/{id}")
     public ResponseEntity<?> deleteJob(@PathVariable String id) {
         List<Application> apps = applicationRepository.findByJobId(id);

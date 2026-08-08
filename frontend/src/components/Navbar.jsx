@@ -30,8 +30,8 @@ const Navbar = () => {
             <Link to="/jobs" className="text-gray-300 hover:text-white font-medium transition-colors duration-200">Jobs</Link>
             {!user ? (
               <div className="flex items-center space-x-4 ml-4">
-                <Link to="/login" className="text-gray-300 hover:text-white font-medium transition-colors duration-200">Login</Link>
-                <Link to="/register" className="btn-primary">Sign Up</Link>
+                <Link to="/login" className="text-gray-300 hover:text-white font-medium transition-colors duration-200 whitespace-nowrap">Login</Link>
+                <Link to="/register" className="btn-primary whitespace-nowrap inline-block">Sign Up</Link>
               </div>
             ) : (
               <div className="flex items-center space-x-4 ml-4 border-l border-gray-700 pl-4">
@@ -73,8 +73,8 @@ const Navbar = () => {
             </Link>
             {!user ? (
               <div className="mt-4 flex flex-col space-y-3 px-3">
-                <Link to="/login" className="btn-secondary w-full text-center" onClick={() => setIsOpen(false)}>Login</Link>
-                <Link to="/register" className="btn-primary w-full text-center" onClick={() => setIsOpen(false)}>Sign Up</Link>
+                <Link to="/login" className="btn-secondary block w-full text-center py-2.5" onClick={() => setIsOpen(false)}>Login</Link>
+                <Link to="/register" className="btn-primary block w-full text-center py-2.5" onClick={() => setIsOpen(false)}>Sign Up</Link>
               </div>
             ) : (
               <div className="mt-4 border-t border-gray-700 pt-4">
