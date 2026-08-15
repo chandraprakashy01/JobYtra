@@ -87,6 +87,7 @@ const FooterSection = ({ title, links }) => (
         <li key={label}>
           <Link
             to={to}
+            onClick={() => window.scrollTo(0, 0)}
             className="group flex items-center gap-2 text-slate-600 text-sm hover:text-accentBlue transition-colors duration-200"
           >
             <Icon className="w-3.5 h-3.5 flex-shrink-0 text-slate-400 group-hover:text-accentBlue transition-colors duration-200" />
