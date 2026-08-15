@@ -25,4 +25,7 @@ public class Company {
     private Boolean isVerified = false;
 
     private String role = "ROLE_COMPANY";
+
+    private String resetOtp;
+    private java.time.LocalDateTime resetOtpExpiry;
 }

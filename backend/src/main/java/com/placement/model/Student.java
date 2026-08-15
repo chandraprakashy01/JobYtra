@@ -36,4 +36,7 @@ public class Student {
     // Role will just be useful for security mapping
     private String role = "ROLE_STUDENT";
 
+    private String resetOtp;
+    private java.time.LocalDateTime resetOtpExpiry;
+
 }

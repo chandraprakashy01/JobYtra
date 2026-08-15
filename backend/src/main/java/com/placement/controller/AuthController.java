@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDateTime;
 
 @CrossOrigin(origins = "https://jobytra.vercel.app", maxAge = 3600)
 @RestController
@@ -106,29 +107,71 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email not found!"));
         }
 
-        // Generate temporary password
-        String tempPassword = "Temp@" + (int)(Math.random() * 900000 + 100000);
-        String encodedPassword = encoder.encode(tempPassword);
+        // Generate 6-digit OTP
+        String otp = String.format("%06d", (int)(Math.random() * 1000000));
+        LocalDateTime expiry = LocalDateTime.now().plusMinutes(10);
 
         if (student != null) {
-            student.setPassword(encodedPassword);
+            student.setResetOtp(otp);
+            student.setResetOtpExpiry(expiry);
             studentRepository.save(student);
         } else {
-            company.setPassword(encodedPassword);
+            company.setResetOtp(otp);
+            company.setResetOtpExpiry(expiry);
             companyRepository.save(company);
         }
 
         // Send email
-        String emailSubject = "JobYtra - Password Reset Request";
+        String emailSubject = "JobYtra - Password Reset OTP";
         String emailBody = "Hello,\n\n" +
-                "Your password has been successfully reset. Below is your temporary password to log in:\n\n" +
-                "Temporary Password: " + tempPassword + "\n\n" +
-                "Please log in and update your password immediately in your profile settings.\n\n" +
+                "You have requested to reset your password. Here is your One-Time Password (OTP):\n\n" +
+                "OTP: " + otp + "\n\n" +
+                "This OTP is valid for 10 minutes.\n\n" +
                 "Best regards,\n" +
                 "JobYtra Placement Cell";
         
         emailService.sendEmail(email, emailSubject, emailBody);
 
-        return ResponseEntity.ok(new ForgotPasswordResponse("Temporary password generated and sent to email.", tempPassword));
+        return ResponseEntity.ok(new MessageResponse("An OTP has been sent to your email."));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+        String email = request.getEmail();
+        String otp = request.getOtp();
+        String newPassword = request.getNewPassword();
+
+        Student student = studentRepository.findByEmail(email).orElse(null);
+        Company company = companyRepository.findByEmail(email).orElse(null);
+
+        if (student == null && company == null) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email not found!"));
+        }
+
+        boolean isValid = false;
+        
+        if (student != null) {
+            if (otp.equals(student.getResetOtp()) && student.getResetOtpExpiry() != null && LocalDateTime.now().isBefore(student.getResetOtpExpiry())) {
+                student.setPassword(encoder.encode(newPassword));
+                student.setResetOtp(null);
+                student.setResetOtpExpiry(null);
+                studentRepository.save(student);
+                isValid = true;
+            }
+        } else {
+            if (otp.equals(company.getResetOtp()) && company.getResetOtpExpiry() != null && LocalDateTime.now().isBefore(company.getResetOtpExpiry())) {
+                company.setPassword(encoder.encode(newPassword));
+                company.setResetOtp(null);
+                company.setResetOtpExpiry(null);
+                companyRepository.save(company);
+                isValid = true;
+            }
+        }
+
+        if (!isValid) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Invalid or expired OTP."));
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Password has been reset successfully."));
     }
 }
