@@ -27,7 +27,9 @@ public class Student {
     @ElementCollection
     private List<String> skills;
     private String resumeUrl;
+    private String profilePicUrl;
     private Boolean isApproved = false;
+    private Boolean isTopPerformer = false;
     private String batch;
     private String collegeId;
 

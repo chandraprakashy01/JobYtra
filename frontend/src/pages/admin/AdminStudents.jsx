@@ -26,6 +26,14 @@ const AdminStudents = () => {
             alert('Failed to approve');
         }
     };
+    const handleToggleTopPerformer = async (id) => {
+        try {
+            const res = await api.put(`/admin/students/${id}/toggle-top-performer`);
+            setStudents(students.map(s => s.id === id ? { ...s, isTopPerformer: res.data.isTopPerformer } : s));
+        } catch (error) {
+            alert('Failed to toggle top performer status');
+        }
+    };
 
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this student?')) return;
@@ -86,6 +94,11 @@ const AdminStudents = () => {
                                                 </button>
                                             ) : (
                                                 <span className="text-gray-500 text-sm italic mr-2">Resolved</span>
+                                            )}
+                                            {student.isApproved && (
+                                                <button onClick={() => handleToggleTopPerformer(student.id)} className={`btn-secondary !py-1.5 !px-4 text-sm ${student.isTopPerformer ? '!border-yellow-500/50 text-yellow-400 hover:bg-yellow-500/10' : ''}`}>
+                                                    {student.isTopPerformer ? 'Unfeature' : 'Feature'}
+                                                </button>
                                             )}
                                             <button onClick={() => handleDelete(student.id)} className="btn-secondary !py-1.5 !px-4 text-sm !border-red-500/50 text-red-400 hover:bg-red-500/10">
                                                 Delete

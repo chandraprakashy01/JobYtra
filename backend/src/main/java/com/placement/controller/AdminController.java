@@ -48,6 +48,15 @@ public class AdminController {
         return ResponseEntity.ok(new MessageResponse("Student approved"));
     }
 
+    @PutMapping("/students/{id}/toggle-top-performer")
+    public ResponseEntity<?> toggleTopPerformer(@PathVariable String id) {
+        Student student = studentRepository.findById(id).orElseThrow();
+        boolean isTop = student.getIsTopPerformer() != null ? student.getIsTopPerformer() : false;
+        student.setIsTopPerformer(!isTop);
+        studentRepository.save(student);
+        return ResponseEntity.ok(student);
+    }
+
     @GetMapping("/companies")
     public ResponseEntity<List<Company>> getAllCompanies() {
         return ResponseEntity.ok(companyRepository.findAll());

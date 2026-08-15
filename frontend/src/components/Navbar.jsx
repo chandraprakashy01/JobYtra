@@ -1,13 +1,25 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import api from '../services/api';
 import { Briefcase, UserCircle, LogOut, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [profilePic, setProfilePic] = useState(null);
 
+  useEffect(() => {
+    const fetchProfile = () => {
+      if (user?.role === 'ROLE_STUDENT') {
+        api.get('/student/profile').then(res => setProfilePic(res.data.profilePicUrl)).catch(() => {});
+      }
+    };
+    fetchProfile();
+    window.addEventListener('profileUpdated', fetchProfile);
+    return () => window.removeEventListener('profileUpdated', fetchProfile);
+  }, [user]);
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -20,8 +32,8 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center group" aria-label="JobYtra Home">
-              <img src="/logo.jpeg" alt="JobYtra Logo" className="h-8 sm:h-10 w-auto transition-transform duration-300 group-hover:scale-105 rounded-md" />
+            <Link to="/" className="flex items-center group" aria-label="JobYtra Home" onClick={() => { window.scrollTo(0, 0); setIsOpen(false); }}>
+              <img src="/JobYtra.jpeg" alt="JobYtra Logo" className="h-8 w-8 sm:h-10 sm:w-10 object-cover transition-transform duration-300 group-hover:scale-105 rounded-full" />
             </Link>
           </div>
 
@@ -39,7 +51,11 @@ const Navbar = () => {
                   {user.role?.replace('ROLE_', '')}
                 </span>
                 <Link to={`/${user.role?.replace('ROLE_', '').toLowerCase()}/dashboard`} className="text-gray-300 hover:text-accentBlue transition-colors duration-200">
-                  <UserCircle className="h-6 w-6" />
+                  {profilePic ? (
+                    <img src={`https://jobytra.onrender.com${profilePic}`} alt="Profile" className="h-7 w-7 rounded-full object-cover border border-gray-600" />
+                  ) : (
+                    <UserCircle className="h-6 w-6" />
+                  )}
                 </Link>
                 <button onClick={handleLogout} className="text-gray-400 hover:text-red-500 transition-colors duration-200" title="Logout">
                   <LogOut className="h-5 w-5" />
@@ -90,7 +106,11 @@ const Navbar = () => {
                     className="flex items-center px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg"
                     onClick={() => setIsOpen(false)}
                   >
-                    <UserCircle className="h-5 w-5 mr-3" /> Dashboard
+                    {profilePic ? (
+                      <img src={`https://jobytra.onrender.com${profilePic}`} alt="Profile" className="h-6 w-6 rounded-full object-cover mr-3 border border-gray-600" />
+                    ) : (
+                      <UserCircle className="h-5 w-5 mr-3" />
+                    )} Dashboard
                   </Link>
                   <button 
                     onClick={handleLogout}

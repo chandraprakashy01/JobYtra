@@ -7,6 +7,8 @@ const StudentProfile = () => {
     const [skillsInput, setSkillsInput] = useState('');
     const [message, setMessage] = useState('');
     const [file, setFile] = useState(null);
+    const [photoFile, setPhotoFile] = useState(null);
+    const [photoPreview, setPhotoPreview] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
 
@@ -42,6 +44,32 @@ const StudentProfile = () => {
             setMessage('Failed to update profile');
         } finally {
             setIsSaving(false);
+            setTimeout(() => setMessage(''), 3000);
+        }
+    };
+    const handlePhotoChange = (e) => {
+        const selected = e.target.files[0];
+        setPhotoFile(selected);
+        if (selected) {
+            setPhotoPreview(URL.createObjectURL(selected));
+        }
+    };
+
+    const handlePhotoUpload = async () => {
+        if (!photoFile) return;
+        const formData = new FormData();
+        formData.append('file', photoFile);
+        try {
+            const res = await api.post('/student/profile-pic', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            setProfile(res.data);
+            setMessage('Profile photo uploaded successfully');
+            setPhotoFile(null);
+            window.dispatchEvent(new Event('profileUpdated'));
+        } catch (error) {
+            setMessage('Failed to upload profile photo');
+        } finally {
             setTimeout(() => setMessage(''), 3000);
         }
     };
@@ -90,6 +118,43 @@ const StudentProfile = () => {
                     <span className="font-medium">{message}</span>
                 </div>
             )}
+
+            <div className="card mb-8 border-t-4 border-t-accentBlue shadow-lg shadow-black/10">
+                <h3 className="text-xl font-bold mb-6 border-b border-gray-800 pb-4 flex items-center text-white">
+                    <User className="w-5 h-5 mr-2 text-accentBlue" /> Profile Photo
+                </h3>
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                    <div className="flex-shrink-0">
+                        {photoPreview ? (
+                            <img src={photoPreview} alt="Preview" className="w-32 h-32 rounded-full object-cover border-4 border-accentBlue/30" />
+                        ) : profile.profilePicUrl ? (
+                            <img src={`https://jobytra.onrender.com${profile.profilePicUrl}`} alt="Profile" className="w-32 h-32 rounded-full object-cover border-4 border-gray-700" />
+                        ) : (
+                            <div className="w-32 h-32 rounded-full bg-darkNavy border-4 border-gray-700 flex items-center justify-center text-4xl font-bold text-gray-500">
+                                {profile.name.charAt(0)}
+                            </div>
+                        )}
+                    </div>
+                    <div className="flex-grow w-full">
+                        <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${photoFile ? 'border-accentBlue bg-accentBlue/5' : 'border-gray-700 bg-darkNavy/50 hover:border-accentBlue/50 hover:bg-darkNavy'}`}>
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                <UploadCloud className={`w-8 h-8 mb-2 ${photoFile ? 'text-accentBlue' : 'text-gray-500'}`} />
+                                <p className="text-sm text-gray-400">
+                                    <span className="font-semibold text-accentBlue">Click to upload</span> photo
+                                </p>
+                            </div>
+                            <input type="file" className="hidden" accept="image/*" onChange={handlePhotoChange} />
+                        </label>
+                    </div>
+                    <button 
+                        onClick={handlePhotoUpload} 
+                        disabled={!photoFile} 
+                        className="btn-primary py-3.5 px-8 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-accentBlue/20"
+                    >
+                        Save Photo
+                    </button>
+                </div>
+            </div>
 
             <div className="card mb-8 border-t-4 border-t-accentBlue shadow-lg shadow-black/10">
                 <h3 className="text-xl font-bold mb-6 border-b border-gray-800 pb-4 flex items-center text-white">

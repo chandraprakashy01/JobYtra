@@ -61,4 +61,24 @@ public class StudentController {
             return ResponseEntity.badRequest().body("Could not upload the file: " + e.getMessage());
         }
     }
+
+    @PostMapping("/profile-pic")
+    public ResponseEntity<?> uploadProfilePic(@RequestParam("file") MultipartFile file, Authentication authentication) {
+        try {
+            if (!Files.exists(root)) {
+                Files.createDirectories(root);
+            }
+            String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+            Files.copy(file.getInputStream(), this.root.resolve(filename));
+
+            String email = authentication.getName();
+            Student student = studentRepository.findByEmail(email).orElseThrow();
+            student.setProfilePicUrl("/uploads/" + filename);
+            studentRepository.save(student);
+
+            return ResponseEntity.ok(student);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Could not upload the file: " + e.getMessage());
+        }
+    }
 }

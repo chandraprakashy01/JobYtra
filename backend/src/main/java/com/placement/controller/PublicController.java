@@ -21,6 +21,6 @@ public class PublicController {
 
     @GetMapping("/top-students")
     public ResponseEntity<List<Student>> getTopStudents() {
-        return ResponseEntity.ok(studentRepository.findTop6ByIsApprovedTrueOrderByCgpaDesc());
+        return ResponseEntity.ok(studentRepository.findByIsTopPerformerTrueAndIsApprovedTrue());
     }
 }

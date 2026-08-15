@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import api from '../services/api';
 import { Briefcase, Users, CheckCircle, Search, ArrowRight, Star } from 'lucide-react';
 
 const Landing = () => {
+  const { user } = useContext(AuthContext);
   const [topStudents, setTopStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     api.get('/public/top-students')
       .then(res => {
-        const aiStudent = {
-          name: "Alexandria",
-          branch: "Artificial Intelligence",
-          cgpa: 10.0,
-          skills: ["Agentic Coding", "React", "Spring Boot", "UI/UX"],
-          profilePic: "/ai_student.png"
-        };
-
         // Attach realistic profile pictures to the backend seeded students
         const mappedBackendStudents = res.data.map(student => {
           if (student.name === 'Aarav Sharma') return { ...student, profilePic: '/aarav_sharma.png' };
@@ -26,19 +20,7 @@ const Landing = () => {
           return student;
         });
 
-        // Add one more mock student to round out the grid if needed
-        const extraMocks = [
-          {
-            name: "Ananya Desai",
-            branch: "Electronics & Comm",
-            cgpa: 9.2,
-            skills: ["C++", "Embedded Systems", "IoT", "Linux"],
-            profilePic: "/student_4.png"
-          }
-        ];
-
-        // Combine AI student, mapped backend students, and extra mocks, keeping max 6
-        setTopStudents([aiStudent, ...mappedBackendStudents, ...extraMocks].slice(0, 6));
+        setTopStudents(mappedBackendStudents.slice(0, 6));
         setIsLoading(false);
       })
       .catch(err => {
@@ -156,6 +138,7 @@ const Landing = () => {
       </section>
 
       {/* Top Students */}
+      {user?.role === 'ROLE_ADMIN' && (
       <section className="py-24 bg-darkNavy/40 backdrop-blur-md relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fadeIn">
@@ -184,8 +167,8 @@ const Landing = () => {
             ) : topStudents.length > 0 ? (
               topStudents.map((student, idx) => (
                 <div key={idx} className={`card flex flex-col items-center p-8 group border-gray-800/50 bg-gradient-to-b from-lightNavy/50 to-transparent hover:border-accentBlue/40 animate-slideUp animate-stagger-${(idx % 3) + 1}`}>
-                  {student.profilePic ? (
-                    <img src={student.profilePic} alt={student.name} className="w-24 h-24 rounded-full object-cover mb-5 shadow-lg shadow-accentBlue/20 group-hover:scale-110 transition-transform duration-300 border-2 border-accentBlue/50" />
+                  {student.profilePicUrl || student.profilePic ? (
+                    <img src={student.profilePicUrl ? `https://jobytra.onrender.com${student.profilePicUrl}` : student.profilePic} alt={student.name} className="w-24 h-24 rounded-full object-cover mb-5 shadow-lg shadow-accentBlue/20 group-hover:scale-110 transition-transform duration-300 border-2 border-accentBlue/50" />
                   ) : (
                     <div className="w-24 h-24 bg-gradient-to-tr from-accentBlue to-cyan-400 rounded-full flex items-center justify-center text-4xl font-bold mb-5 shadow-lg shadow-accentBlue/20 group-hover:scale-110 transition-transform duration-300">
                       {student.name.charAt(0)}
@@ -216,6 +199,7 @@ const Landing = () => {
           </div>
         </div>
       </section>
+      )}
     </div>
   );
 };

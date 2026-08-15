@@ -9,6 +9,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     Optional<Student> findByEmail(String email);
     Boolean existsByEmail(String email);
     List<Student> findTop6ByIsApprovedTrueOrderByCgpaDesc();
+    List<Student> findByIsTopPerformerTrueAndIsApprovedTrue();
     List<Student> findByIsApprovedTrue();
 }
 
