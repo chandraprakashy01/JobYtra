@@ -32,7 +32,7 @@ public class JobController {
     @Autowired
     StudentRepository studentRepository;
 
-    private JobWithCompanyDTO toDTO(Job job) {
+    private JobWithCompanyDTO toDTO(Job job, Company company) {
         JobWithCompanyDTO dto = new JobWithCompanyDTO();
         dto.setId(job.getId());
         dto.setTitle(job.getTitle());
@@ -46,29 +46,42 @@ public class JobController {
         dto.setIsApproved(job.getIsApproved());
         dto.setPostedAt(job.getPostedAt());
 
-        // Enrich with company info
-        if (job.getCompanyId() != null) {
-            Optional<Company> companyOpt = companyRepository.findById(job.getCompanyId());
-            companyOpt.ifPresent(company -> {
-                dto.setCompanyName(company.getName());
-                dto.setCompanyWebsite(company.getWebsite());
-                dto.setCompanyAbout(company.getAbout());
-            });
+        if (company != null) {
+            dto.setCompanyName(company.getName());
+            dto.setCompanyWebsite(company.getWebsite());
+            dto.setCompanyAbout(company.getAbout());
         }
         return dto;
     }
 
+    private List<JobWithCompanyDTO> convertToDTOs(List<Job> jobs) {
+        List<String> companyIds = jobs.stream()
+                .map(Job::getCompanyId)
+                .filter(id -> id != null)
+                .distinct()
+                .collect(Collectors.toList());
+        
+        java.util.Map<String, Company> companyMap = companyRepository.findAllById(companyIds).stream()
+                .collect(Collectors.toMap(Company::getId, c -> c));
+
+        return jobs.stream()
+                .map(job -> toDTO(job, companyMap.get(job.getCompanyId())))
+                .collect(Collectors.toList());
+    }
+
     @GetMapping
     public ResponseEntity<List<JobWithCompanyDTO>> getAllApprovedJobs() {
-        List<JobWithCompanyDTO> dtos = jobRepository.findByIsApprovedTrue()
-                .stream().map(this::toDTO).collect(Collectors.toList());
-        return ResponseEntity.ok(dtos);
+        List<Job> jobs = jobRepository.findByIsApprovedTrue();
+        return ResponseEntity.ok(convertToDTOs(jobs));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<JobWithCompanyDTO> getJobById(@PathVariable String id) {
         return jobRepository.findById(id)
-                .map(job -> ResponseEntity.ok(toDTO(job)))
+                .map(job -> {
+                    Company company = job.getCompanyId() != null ? companyRepository.findById(job.getCompanyId()).orElse(null) : null;
+                    return ResponseEntity.ok(toDTO(job, company));
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -82,7 +95,7 @@ public class JobController {
 
         List<Job> allApproved = jobRepository.findByIsApprovedTrue();
 
-        List<JobWithCompanyDTO> recommended = allApproved.stream().filter(job -> {
+        List<Job> recommendedJobs = allApproved.stream().filter(job -> {
             // Check eligibility first
             if (student.getCgpa() != null && job.getEligibility() != null && job.getEligibility().getMinCgpa() != null) {
                 if (student.getCgpa() < job.getEligibility().getMinCgpa()) return false;
@@ -100,8 +113,8 @@ public class JobController {
                         .count();
             }
             return matchCount > 0; // return if at least 1 skill matches
-        }).map(this::toDTO).collect(Collectors.toList());
+        }).collect(Collectors.toList());
 
-        return ResponseEntity.ok(recommended);
+        return ResponseEntity.ok(convertToDTOs(recommendedJobs));
     }
 }

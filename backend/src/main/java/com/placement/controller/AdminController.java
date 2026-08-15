@@ -92,12 +92,7 @@ public class AdminController {
     public ResponseEntity<?> getStats() {
         long totalStudents = studentRepository.count();
         long totalCompanies = companyRepository.count();
-        // Just rough stats:
-        long placedStudents = applicationRepository.findAll().stream()
-                .filter(a -> "selected".equalsIgnoreCase(a.getStatus()))
-                .map(a -> a.getStudentId())
-                .distinct()
-                .count();
+        long placedStudents = applicationRepository.countDistinctStudentIdByStatusIgnoreCase("selected");
 
         Map<String, Object> stats = new HashMap<>();
         stats.put("totalStudents", totalStudents);

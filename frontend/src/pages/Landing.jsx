@@ -138,7 +138,6 @@ const Landing = () => {
       </section>
 
       {/* Top Students */}
-      {user?.role === 'ROLE_ADMIN' && (
       <section className="py-24 bg-darkNavy/40 backdrop-blur-md relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fadeIn">
@@ -199,7 +198,6 @@ const Landing = () => {
           </div>
         </div>
       </section>
-      )}
     </div>
   );
 };
