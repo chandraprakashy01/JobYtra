@@ -202,31 +202,6 @@ cd backend
 
 Create a `.env` file inside `backend/` (or export these as system environment variables):
 
-```env
-# ── PostgreSQL / Supabase ──────────────────────────────────────────
-DB_URL=jdbc:postgresql://localhost:5432/placement_db
-DB_USERNAME=postgres
-DB_PASSWORD=your_password
-
-# ── JWT ───────────────────────────────────────────────────────────
-JWT_SECRET=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-JWT_EXPIRATION_MS=86400000
-
-# ── Gemini AI ─────────────────────────────────────────────────────
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# ── Email (Gmail SMTP) ────────────────────────────────────────────
-MAIL_USERNAME=your_gmail@gmail.com
-MAIL_PASSWORD=your_gmail_app_password
-
-# ── Google OAuth2 (optional) ──────────────────────────────────────
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-
-# ── GitHub OAuth2 (optional) ──────────────────────────────────────
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
-```
 
 Run the backend:
 
