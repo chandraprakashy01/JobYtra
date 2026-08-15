@@ -35,17 +35,7 @@ public class JwtUtils {
                 .compact();
     }
 
-    /** Used by OAuth2 flow where we have user details directly (no Spring Authentication object). */
-    public String generateJwtTokenForUser(String email, String role, String id) {
-        return Jwts.builder()
-                .setSubject(email)
-                .claim("role", role)
-                .claim("id", id)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
-                .compact();
-    }
+
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parserBuilder().setSigningKey(getSigningKey()).build()

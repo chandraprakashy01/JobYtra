@@ -22,7 +22,7 @@ import FAQ from './pages/FAQ';
 import HelpCenter from './pages/HelpCenter';
 import HostEvent from './pages/HostEvent';
 import ForgotPassword from './pages/ForgotPassword';
-import OAuthCallback from './pages/OAuthCallback';
+
 
 // Student Pages
 import StudentDashboard from './pages/student/StudentDashboard';
@@ -83,7 +83,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/help" element={<HelpCenter />} />
           <Route path="/events/host" element={<HostEvent />} />
-          <Route path="/oauth2/callback" element={<OAuthCallback />} />
+
         </Route>
 
         {/* Student Routes */}

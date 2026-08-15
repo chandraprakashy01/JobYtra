@@ -71,7 +71,7 @@ public class WebSecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> 
-                auth.requestMatchers("/api/auth/**", "/api/public/**", "/api/auth/oauth2/**").permitAll()
+                auth.requestMatchers("/api/auth/**", "/api/public/**").permitAll()
                     .requestMatchers("/api/jobs", "/api/jobs/{id}").permitAll()
                     .requestMatchers("/uploads/**").permitAll()
                     .requestMatchers("/api/student/**").hasRole("STUDENT")
